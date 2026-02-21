@@ -1,0 +1,7 @@
+version: 1
+policy:
+  allow_implicit_invocation: true
+interface:
+  display_name: FDF Implementation Planner
+  short_description: Produce an implementation strategy with explicit module and file-level changes.
+  default_prompt: Create a delivery blueprint with strategy options, boundary decisions, and ordered execution steps.

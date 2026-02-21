@@ -1,0 +1,7 @@
+version: 1
+policy:
+  allow_implicit_invocation: true
+interface:
+  display_name: FDF Code Explorer
+  short_description: Discovery/behavior tracing for trigger points, runtime paths, and boundaries in the target feature area.
+  default_prompt: Trace the current implementation behavior and return a change-surface brief with key files.

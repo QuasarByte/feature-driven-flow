@@ -1,0 +1,7 @@
+version: 1
+policy:
+  allow_implicit_invocation: true
+interface:
+  display_name: FDF Change Auditor
+  short_description: Audit implementation diffs for correctness and reliability using active verify rules.
+  default_prompt: Audit the provided changes, collect evidence-backed findings, and propose minimal safe remediation.
