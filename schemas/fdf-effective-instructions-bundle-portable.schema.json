@@ -1,0 +1,349 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/fdf-effective-instructions-bundle-portable.schema.json",
+  "title": "FDF Effective Instructions Directory Bundle Manifest (Portable)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "content_mode",
+    "fdf_version",
+    "created_at",
+    "effective_matrix",
+    "phase_files",
+    "embedded_sources"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "fdf/effective-instructions-bundle-portable.v1"
+    },
+    "content_mode": {
+      "type": "string",
+      "enum": [
+        "portable",
+        "hybrid"
+      ]
+    },
+    "fdf_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "effective_matrix": {
+      "$ref": "#/$defs/effectiveMatrix"
+    },
+    "phase_files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "explore",
+        "clarify",
+        "architect",
+        "implement",
+        "verify",
+        "summarize"
+      ],
+      "properties": {
+        "scope": { "type": "string", "minLength": 1 },
+        "explore": { "type": "string", "minLength": 1 },
+        "clarify": { "type": "string", "minLength": 1 },
+        "architect": { "type": "string", "minLength": 1 },
+        "implement": { "type": "string", "minLength": 1 },
+        "verify": { "type": "string", "minLength": 1 },
+        "summarize": { "type": "string", "minLength": 1 }
+      }
+    },
+    "provenance_files": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/provenanceFile" }
+    },
+    "custom_instructions": {
+      "$ref": "#/$defs/customInstructionsBlock"
+    },
+    "embedded_sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/embeddedSource" }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "ruleIdList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "effectiveMatrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "fdf_version",
+        "created_at",
+        "selected_profiles",
+        "profile_overrides",
+        "enabled_packs",
+        "rule_matrix"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "fdf/effective-rule-matrix.v1"
+        },
+        "fdf_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selected_profiles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "profile_overrides": {
+          "type": "object"
+        },
+        "enabled_packs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "rule_matrix": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope",
+            "explore",
+            "clarify",
+            "architect",
+            "implement",
+            "verify",
+            "summarize"
+          ],
+          "properties": {
+            "scope": { "$ref": "#/$defs/ruleIdList" },
+            "explore": { "$ref": "#/$defs/ruleIdList" },
+            "clarify": { "$ref": "#/$defs/ruleIdList" },
+            "architect": { "$ref": "#/$defs/ruleIdList" },
+            "implement": { "$ref": "#/$defs/ruleIdList" },
+            "verify": { "$ref": "#/$defs/ruleIdList" },
+            "summarize": { "$ref": "#/$defs/ruleIdList" }
+          }
+        },
+        "context_model": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "provenanceFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "path"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "rule",
+            "profile",
+            "template",
+            "reference"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "embeddedSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "path",
+        "content"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "rule",
+            "profile",
+            "template",
+            "reference"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "phaseId": {
+      "type": "string",
+      "enum": [
+        "scope",
+        "explore",
+        "clarify",
+        "architect",
+        "implement",
+        "verify",
+        "summarize"
+      ]
+    },
+    "phaseIdList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/phaseId"
+      },
+      "uniqueItems": true
+    },
+    "customInstructionItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "origin",
+        "state",
+        "apply_mode",
+        "text"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "instruction",
+            "prompt",
+            "phrase",
+            "rule",
+            "constraint"
+          ]
+        },
+        "origin": {
+          "type": "string",
+          "enum": [
+            "user_raw",
+            "llm_rephrase",
+            "llm_proposal",
+            "imported"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "approved",
+            "rejected"
+          ]
+        },
+        "apply_mode": {
+          "type": "string",
+          "enum": [
+            "append",
+            "prepend",
+            "replace"
+          ]
+        },
+        "target_phases": {
+          "$ref": "#/$defs/phaseIdList"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rephrased_from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "customInstructionsBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision",
+        "items"
+      ],
+      "properties": {
+        "decision": {
+          "type": "string",
+          "enum": [
+            "none",
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        },
+        "summary": {
+          "type": "string"
+        },
+        "approved_by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approved_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/customInstructionItem"
+          }
+        }
+      }
+    }
+  }
+}

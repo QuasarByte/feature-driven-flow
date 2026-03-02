@@ -1,0 +1,47 @@
+{
+  "schema": "fdf/effective-instructions-compact-portable.v1",
+  "content_mode": "portable",
+  "fdf_version": "1.1.0",
+  "created_at": "2026-03-04T00:00:00Z",
+  "effective_matrix": {
+    "schema": "fdf/effective-rule-matrix.v1",
+    "fdf_version": "1.1.0",
+    "created_at": "2026-03-04T00:00:00Z",
+    "selected_profiles": [],
+    "profile_overrides": {},
+    "enabled_packs": [],
+    "rule_matrix": {
+      "scope": [],
+      "explore": [],
+      "clarify": [],
+      "architect": [],
+      "implement": [],
+      "verify": [],
+      "summarize": []
+    }
+  },
+  "phase_instructions": {
+    "scope": "",
+    "explore": "",
+    "clarify": "",
+    "architect": "",
+    "implement": "",
+    "verify": "",
+    "summarize": ""
+  },
+  "embedded_sources": [
+    {
+      "kind": "rule",
+      "id": "scope-baseline",
+      "path": "skills/feature-driven-flow/extensions/rules/scope-baseline.md",
+      "content": "# Rule: scope-baseline\n...",
+      "sha256": "sha256-placeholder"
+    }
+  ],
+  "custom_instructions": {
+    "decision": "none",
+    "summary": "",
+    "items": []
+  },
+  "notes": ""
+}

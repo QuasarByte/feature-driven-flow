@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/fdf-settings.schema.json",
+  "title": "FDF Settings",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "persistence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "run_root_dir": { "type": "string", "minLength": 1 },
+        "run_id_format": { "type": "string", "minLength": 1 },
+        "phase_files": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": { "type": "boolean" }
+          }
+        },
+        "shared_logs": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "async_packets": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "dir": { "type": "string", "minLength": 1 },
+        "emit_on_phases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "scope",
+              "explore",
+              "clarify",
+              "architect",
+              "implement",
+              "verify",
+              "summarize"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "packet_format": { "type": "string", "minLength": 1 }
+      }
+    },
+    "exports": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "runbook": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "filename": { "type": "string", "minLength": 1 }
+          }
+        },
+        "state_json": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "filename": { "type": "string", "minLength": 1 }
+          }
+        },
+        "conversation_export": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "filename": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "packs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "allow_shared_packs": { "type": "boolean" },
+        "allow_local_packs": { "type": "boolean" },
+        "shared_dir": { "type": "string", "minLength": 1 },
+        "local_dir": { "type": "string", "minLength": 1 },
+        "manifest_filename": { "type": "string", "minLength": 1 }
+      }
+    },
+    "local_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "local_profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "local_extensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dir_rules": { "type": "string", "minLength": 1 },
+        "dir_profiles": { "type": "string", "minLength": 1 }
+      }
+    },
+    "overrides": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allow_local_refine_shared_rules": { "type": "boolean" },
+        "allow_user_matrix_overrides": { "type": "boolean" }
+      }
+    },
+    "matrix_import": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allow_file_path": { "type": "boolean" },
+        "allow_inline_block": { "type": "boolean" },
+        "default_file": { "type": "string", "minLength": 1 },
+        "strict_validation": { "type": "boolean" }
+      }
+    },
+    "matrix_export": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "auto_generate_on_scope_confirmed": { "type": "boolean" },
+        "default_file": { "type": "string", "minLength": 1 },
+        "allow_user_path_override": { "type": "boolean" },
+        "allow_absolute_path": { "type": "boolean" },
+        "overwrite_existing": { "type": "boolean" }
+      }
+    },
+    "effective_instructions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "import": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "allow_directory_bundle": { "type": "boolean" },
+            "allow_compact_file": { "type": "boolean" },
+            "default_directory_bundle": { "type": "string", "minLength": 1 },
+            "default_compact_file": { "type": "string", "minLength": 1 },
+            "default_portable_directory_bundle": { "type": "string", "minLength": 1 },
+            "default_portable_compact_file": { "type": "string", "minLength": 1 },
+            "accept_content_modes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["reference", "portable", "hybrid"]
+              },
+              "uniqueItems": true
+            },
+            "allow_custom_instructions": { "type": "boolean" },
+            "require_custom_instructions_confirmation": { "type": "boolean" },
+            "strict_validation": { "type": "boolean" }
+          }
+        },
+        "export": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "auto_generate_on_scope_confirmed": { "type": "boolean" },
+            "default_directory_bundle": { "type": "string", "minLength": 1 },
+            "default_compact_file": { "type": "string", "minLength": 1 },
+            "default_portable_directory_bundle": { "type": "string", "minLength": 1 },
+            "default_portable_compact_file": { "type": "string", "minLength": 1 },
+            "content_mode": {
+              "type": "string",
+              "enum": ["reference", "portable", "hybrid"]
+            },
+            "embed_only_referenced_sources": { "type": "boolean" },
+            "include_embedded_sha256": { "type": "boolean" },
+            "allow_custom_instructions": { "type": "boolean" },
+            "require_custom_instructions_approval": { "type": "boolean" },
+            "require_all_custom_instruction_items_approved": { "type": "boolean" },
+            "allow_custom_instruction_rephrase": { "type": "boolean" },
+            "allow_custom_instruction_proposals": { "type": "boolean" },
+            "allow_user_path_override": { "type": "boolean" },
+            "allow_absolute_path": { "type": "boolean" },
+            "overwrite_existing": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "require_file_refs": { "type": "boolean" }
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "include_profile_provenance": { "type": "boolean" }
+      }
+    },
+    "owners": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "default_decision_owner": { "type": "string" },
+        "default_risk_owner": { "type": "string" }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "channels": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

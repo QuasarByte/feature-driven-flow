@@ -7,6 +7,11 @@ description: Audit implementation changes for correctness and reliability. Use w
 
 Audit changed code with high precision and low noise.
 
+## Contract
+
+1. Follow the active Verify-phase rules from the conductor-selected rule matrix.
+2. Prefer high-confidence findings; label assumptions and uncertainty explicitly.
+
 ## Audit Scope
 
 1. Audit the provided diff or range.

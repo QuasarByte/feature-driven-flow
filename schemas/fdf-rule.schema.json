@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/fdf-rule.schema.json",
+  "title": "FDF Rule (Logical Model)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "applies_to_phases", "intent", "guidance", "checks", "outputs"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "applies_to_phases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["scope", "explore", "clarify", "architect", "implement", "verify", "summarize"]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "intent": { "type": "string", "minLength": 1 },
+    "guidance": { "type": "object" },
+    "checks": { "type": "object" },
+    "outputs": { "type": "object" },
+    "examples": { "type": "array", "items": { "type": "string" } },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "requires": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "conflicts_with": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  }
+}
+

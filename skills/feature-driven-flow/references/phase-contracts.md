@@ -9,9 +9,18 @@
 5. Change concerns required by active rules.
 6. Rule selection context:
    - inferred execution context summary and confidence
+   - inferred context-model fields (strictness/change_type/system_shape/delivery_surface/optional compliance + flags)
+   - matrix candidate input mode (`file|inline|none`) and source reference
+   - compiled instructions candidate mode (`bundle|compact|none`) and content mode (`reference|portable|hybrid|none`) and source reference
+   - imported custom instructions disposition (`accept|edit|discard|none`) and confirmation state
+   - candidate validation result and normalization notes (if applicable)
+   - matrix export mode (`auto|on-demand|none`) and target path policy from settings
+   - compiled instructions export mode (`auto|on-demand|none`), format (`bundle|compact`), and content mode (`reference|portable|hybrid`)
+   - custom instructions export decision (`include|skip`), approval status (`approved|pending|none`), and approved/skipped item counts
+   - selected profiles (if any) and profile overrides
    - selected shared rules
    - selected repository-local rules
-   - user confirmation or adjustment of phase rule matrix
+   - user confirmation or adjustment of Effective Rule Matrix
 
 ## Output Contract by Phase
 

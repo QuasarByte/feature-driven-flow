@@ -1,0 +1,117 @@
+{
+  "persistence": {
+    "enabled": true,
+    "run_root_dir": "fdf/runs",
+    "run_id_format": "YYYYMMDD-HHMM-<short-slug>",
+    "phase_files": {
+      "enabled": true
+    },
+    "shared_logs": {
+      "enabled": true
+    }
+  },
+  "async_packets": {
+    "enabled": true,
+    "dir": "packets",
+    "emit_on_phases": [
+      "scope",
+      "clarify",
+      "architect",
+      "verify"
+    ],
+    "packet_format": "tui-markdown"
+  },
+  "exports": {
+    "runbook": {
+      "enabled": true,
+      "filename": "RUNBOOK.md"
+    },
+    "state_json": {
+      "enabled": true,
+      "filename": "state.json"
+    },
+    "conversation_export": {
+      "enabled": false,
+      "filename": "conversation-export.md"
+    }
+  },
+  "packs": {
+    "enabled": [
+      "async-collab",
+      "hardening",
+      "observability-lite",
+      "presets",
+      "quality"
+    ],
+    "allow_shared_packs": true,
+    "allow_local_packs": true,
+    "shared_dir": "skills/feature-driven-flow/packs",
+    "local_dir": ".codex/feature-driven-flow/packs",
+    "manifest_filename": "manifest.json"
+  },
+  "local_rules": {
+    "enabled": true
+  },
+  "local_profiles": {
+    "enabled": true
+  },
+  "local_extensions": {
+    "dir_rules": ".codex/feature-driven-flow/rules",
+    "dir_profiles": ".codex/feature-driven-flow/profiles"
+  },
+  "overrides": {
+    "allow_local_refine_shared_rules": true,
+    "allow_user_matrix_overrides": true
+  },
+  "matrix_import": {
+    "allow_file_path": true,
+    "allow_inline_block": true,
+    "default_file": ".codex/feature-driven-flow/effective-rule-matrix.json",
+    "strict_validation": true
+  },
+  "matrix_export": {
+    "auto_generate_on_scope_confirmed": false,
+    "default_file": ".codex/feature-driven-flow/effective-rule-matrix.json",
+    "allow_user_path_override": true,
+    "allow_absolute_path": true,
+    "overwrite_existing": true
+  },
+  "effective_instructions": {
+    "import": {
+      "allow_directory_bundle": true,
+      "allow_compact_file": true,
+      "default_directory_bundle": ".codex/feature-driven-flow/effective-instructions-bundle",
+      "default_compact_file": ".codex/feature-driven-flow/effective-instructions-compact.json",
+      "default_portable_directory_bundle": ".codex/feature-driven-flow/effective-instructions-bundle-portable",
+      "default_portable_compact_file": ".codex/feature-driven-flow/effective-instructions-compact-portable.json",
+      "accept_content_modes": ["reference", "portable", "hybrid"],
+      "allow_custom_instructions": true,
+      "require_custom_instructions_confirmation": true,
+      "strict_validation": true
+    },
+    "export": {
+      "auto_generate_on_scope_confirmed": false,
+      "default_directory_bundle": ".codex/feature-driven-flow/effective-instructions-bundle",
+      "default_compact_file": ".codex/feature-driven-flow/effective-instructions-compact.json",
+      "default_portable_directory_bundle": ".codex/feature-driven-flow/effective-instructions-bundle-portable",
+      "default_portable_compact_file": ".codex/feature-driven-flow/effective-instructions-compact-portable.json",
+      "content_mode": "reference",
+      "embed_only_referenced_sources": true,
+      "include_embedded_sha256": true,
+      "allow_custom_instructions": true,
+      "require_custom_instructions_approval": true,
+      "require_all_custom_instruction_items_approved": true,
+      "allow_custom_instruction_rephrase": true,
+      "allow_custom_instruction_proposals": true,
+      "allow_user_path_override": true,
+      "allow_absolute_path": true,
+      "overwrite_existing": true
+    }
+  },
+  "evidence": {
+    "require_file_refs": true
+  },
+  "outputs": {
+    "include_profile_provenance": true
+  }
+}

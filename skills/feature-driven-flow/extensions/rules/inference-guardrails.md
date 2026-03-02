@@ -6,6 +6,9 @@
 ## title
 Inference Guardrails
 
+## tags
+`process`, `inference`
+
 ## applies_to_phases
 `scope`, `clarify`, `verify`
 

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/fdf-profile.schema.json",
+  "title": "FDF Profile (Logical Model)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "intent", "rule_sets"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "intent": { "type": "string", "minLength": 1 },
+    "extends": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "rule_sets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["always"],
+      "properties": {
+        "always": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "by_phase": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          }
+        },
+        "optional_overlays": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "constraints": { "type": "object" },
+    "outputs_expectations": { "type": "array", "items": { "type": "string" } },
+    "examples": { "type": "array", "items": { "type": "string" } }
+  }
+}
+

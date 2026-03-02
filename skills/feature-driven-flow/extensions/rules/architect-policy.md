@@ -6,6 +6,9 @@
 ## title
 Architect Policy
 
+## tags
+`process`, `architect`
+
 ## applies_to_phases
 `architect`
 
@@ -14,7 +17,7 @@ Produce clear architecture choices with explicit tradeoffs and user selection.
 
 ## guidance
 ### architect
-1. Run parallel `fdf-implementation-planner` passes where possible.
+1. Run parallel planning passes where possible.
 2. Produce at least three options: contained delta, seam-first modularization, delivery-optimized path.
 3. Recommend one option with rationale.
 4. Require explicit seams and clear component responsibilities in each option.

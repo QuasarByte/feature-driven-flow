@@ -6,6 +6,9 @@
 ## title
 Explore Baseline
 
+## tags
+`process`, `explore`
+
 ## applies_to_phases
 `explore`
 
@@ -14,7 +17,7 @@ Build an accurate repository behavior map before design and implementation.
 
 ## guidance
 ### explore
-1. Run parallel `fdf-code-explorer` passes when possible (at least two perspectives).
+1. Run parallel exploration passes when possible (at least two perspectives).
 2. Trace analogous capability paths, architecture seams, and integration surfaces.
 3. Read all key files identified by exploration.
 4. Summarize change surface and boundaries.

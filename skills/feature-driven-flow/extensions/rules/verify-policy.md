@@ -6,6 +6,9 @@
 ## title
 Verify Policy
 
+## tags
+`process`, `verify`
+
 ## applies_to_phases
 `verify`
 
@@ -15,7 +18,7 @@ Close work with high-confidence findings and explicit user disposition.
 ## guidance
 ### verify
 1. If no explicit diff/range is provided, default audit scope to current working diff.
-2. Run parallel `fdf-change-auditor` passes where possible.
+2. Run parallel audit passes where possible.
 3. Consolidate findings into blocking and material groups.
 4. Attach confidence per issue.
 5. Report high-confidence findings by default (confidence >= 80).

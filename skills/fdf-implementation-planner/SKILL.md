@@ -7,6 +7,11 @@ description: Turn clarified requirements into an implementation strategy anchore
 
 Produce an actionable delivery blueprint.
 
+## Contract
+
+1. Follow the active Architect-phase rules from the conductor-selected rule matrix.
+2. Keep outputs evidence-backed and tied to repository realities; do not invent constraints.
+
 ## Process
 
 1. Reconcile user requirements with codebase constraints.

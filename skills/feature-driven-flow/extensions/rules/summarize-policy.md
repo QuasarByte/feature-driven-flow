@@ -6,6 +6,9 @@
 ## title
 Summarize Policy
 
+## tags
+`process`, `summarize`
+
 ## applies_to_phases
 `summarize`
 

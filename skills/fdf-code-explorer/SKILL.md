@@ -7,6 +7,11 @@ description: Trace how the current repository behaves for a target feature. Use 
 
 Build a precise behavior-trace view of the current implementation landscape.
 
+## Contract
+
+1. Follow the active Explore-phase rules from the conductor-selected rule matrix.
+2. Do not introduce additional requirements beyond what active rules ask for; surface uncertainty as questions or risks.
+
 ## Process
 
 1. Discover where behavior starts (API handlers, UI actions, jobs, commands).

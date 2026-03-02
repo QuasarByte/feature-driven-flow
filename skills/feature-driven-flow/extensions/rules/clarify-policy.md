@@ -6,6 +6,9 @@
 ## title
 Clarify Policy
 
+## tags
+`process`, `clarify`
+
 ## applies_to_phases
 `clarify`
 
