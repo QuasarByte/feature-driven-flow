@@ -1,24 +1,57 @@
 # Validation Types Playbook
 
 Date: 2026-03-04
-Scope: reusable validation catalog for `codex-feature-driven-flow`.
+Scope: reusable validation catalog for `feature-driven-flow`.
 
 ## 1) Purpose
 
-This document defines the validation types used in recent full validation cycles.
-Use it as a standard checklist before merging large refactors.
+Use this document when changing shared assets, manifests, packaging scripts, settings, schemas, or entrypoints.
 
-## 2) Recommended Execution Order
+This is an operator and maintainer document. It is not the behavioral specification. For runtime semantics and artifact contracts, use `docs/specification.md`.
+
+## 2) Fast Path
+
+For normal work, start here:
+
+```powershell
+pwsh -NoProfile -File tools/run-validation-cycle.ps1
+```
+
+Interpretation:
+
+1. `PASS` means no action for that check.
+2. `WARN` means review the evidence, usually worktree hygiene.
+3. `FAIL` means jump to the matching section below for diagnosis.
+
+Use the detailed checks below only when:
+
+1. the full runner fails
+2. you are debugging one validation family
+3. you are changing validation scripts themselves
+
+## 3) Recommended Execution Order
 
 1. Schema and structural checks.
 2. Manifest generation and manifest integrity checks.
 3. Cross-asset logical consistency checks.
-4. Reference/link consistency checks.
-5. Architecture/spec conformance checks.
+4. Reference and link consistency checks.
+5. Architecture and spec conformance checks.
 6. Working tree hygiene checks.
-7. Prompt command namespace and line-ending checks.
+7. Prompt namespace and line-ending checks.
 
-## 3) Validation Groups and Types
+## 4) Failure Triage Map
+
+| If the failure mentions | Start with |
+|---|---|
+| schema, settings, matrix, compact, bundle | Group A |
+| manifest, pack manifest, duplicate IDs | Group B |
+| settings policy, pack enablement | Group C |
+| links, template references | Group D |
+| workflow contract, precedence alignment | Group E |
+| worktree, staged, unstaged, untracked | Group F |
+| prompt names, namespace, line endings | Group G |
+
+## 5) Validation Groups and Types
 
 ## Group A: Schema and Structural Integrity
 
@@ -28,19 +61,19 @@ Intent:
 1. Ensure settings files match canonical schema.
 
 Inputs:
-1. `schemas/fdf-settings.schema.json`
-2. `schemas/fdf-effective-matrix.schema.json`
-3. `schemas/fdf-effective-instructions-bundle.schema.json`
-4. `schemas/fdf-effective-instructions-compact.schema.json`
-5. `schemas/fdf-effective-instructions-bundle-portable.schema.json`
-6. `schemas/fdf-effective-instructions-compact-portable.schema.json`
-7. `skills/feature-driven-flow/settings.json`
-8. `skills/feature-driven-flow/templates/settings.json`
-9. `skills/feature-driven-flow/templates/effective-rule-matrix.json`
-10. `skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json`
-11. `skills/feature-driven-flow/templates/effective-instructions-compact.json`
-12. `skills/feature-driven-flow/templates/effective-instructions-bundle-portable.manifest.json`
-13. `skills/feature-driven-flow/templates/effective-instructions-compact-portable.json`
+1. `shared/fdf/schemas/fdf-settings.schema.json`
+2. `shared/fdf/schemas/fdf-effective-matrix.schema.json`
+3. `shared/fdf/schemas/fdf-effective-instructions-bundle.schema.json`
+4. `shared/fdf/schemas/fdf-effective-instructions-compact.schema.json`
+5. `shared/fdf/schemas/fdf-effective-instructions-bundle-portable.schema.json`
+6. `shared/fdf/schemas/fdf-effective-instructions-compact-portable.schema.json`
+7. `shared/fdf/skills/feature-driven-flow/settings.json`
+8. `shared/fdf/skills/feature-driven-flow/templates/settings.json`
+9. `shared/fdf/skills/feature-driven-flow/templates/effective-rule-matrix.json`
+10. `shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json`
+11. `shared/fdf/skills/feature-driven-flow/templates/effective-instructions-compact.json`
+12. `shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle-portable.manifest.json`
+13. `shared/fdf/skills/feature-driven-flow/templates/effective-instructions-compact-portable.json`
 14. Optional: `.codex/feature-driven-flow/settings.json` (in target repos)
 15. Optional: `.codex/feature-driven-flow/effective-rule-matrix.json` (in target repos)
 16. Optional: `.codex/feature-driven-flow/effective-instructions-bundle/bundle.manifest.json` (in target repos)
@@ -51,19 +84,19 @@ Inputs:
 Command:
 
 ```powershell
-$schema='schemas/fdf-settings.schema.json'
-Test-Json -Path skills/feature-driven-flow/settings.json -SchemaFile $schema
-Test-Json -Path skills/feature-driven-flow/templates/settings.json -SchemaFile $schema
-$matrixSchema='schemas/fdf-effective-matrix.schema.json'
-Test-Json -Path skills/feature-driven-flow/templates/effective-rule-matrix.json -SchemaFile $matrixSchema
-$bundleSchema='schemas/fdf-effective-instructions-bundle.schema.json'
-Test-Json -Path skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json -SchemaFile $bundleSchema
-$compactSchema='schemas/fdf-effective-instructions-compact.schema.json'
-Test-Json -Path skills/feature-driven-flow/templates/effective-instructions-compact.json -SchemaFile $compactSchema
-$bundlePortableSchema='schemas/fdf-effective-instructions-bundle-portable.schema.json'
-Test-Json -Path skills/feature-driven-flow/templates/effective-instructions-bundle-portable.manifest.json -SchemaFile $bundlePortableSchema
-$compactPortableSchema='schemas/fdf-effective-instructions-compact-portable.schema.json'
-Test-Json -Path skills/feature-driven-flow/templates/effective-instructions-compact-portable.json -SchemaFile $compactPortableSchema
+$schema='shared/fdf/schemas/fdf-settings.schema.json'
+Test-Json -Path shared/fdf/skills/feature-driven-flow/settings.json -SchemaFile $schema
+Test-Json -Path shared/fdf/skills/feature-driven-flow/templates/settings.json -SchemaFile $schema
+$matrixSchema='shared/fdf/schemas/fdf-effective-matrix.schema.json'
+Test-Json -Path shared/fdf/skills/feature-driven-flow/templates/effective-rule-matrix.json -SchemaFile $matrixSchema
+$bundleSchema='shared/fdf/schemas/fdf-effective-instructions-bundle.schema.json'
+Test-Json -Path shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json -SchemaFile $bundleSchema
+$compactSchema='shared/fdf/schemas/fdf-effective-instructions-compact.schema.json'
+Test-Json -Path shared/fdf/skills/feature-driven-flow/templates/effective-instructions-compact.json -SchemaFile $compactSchema
+$bundlePortableSchema='shared/fdf/schemas/fdf-effective-instructions-bundle-portable.schema.json'
+Test-Json -Path shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle-portable.manifest.json -SchemaFile $bundlePortableSchema
+$compactPortableSchema='shared/fdf/schemas/fdf-effective-instructions-compact-portable.schema.json'
+Test-Json -Path shared/fdf/skills/feature-driven-flow/templates/effective-instructions-compact-portable.json -SchemaFile $compactPortableSchema
 ```
 
 Pass criteria:
@@ -136,7 +169,7 @@ if(Test-Path $tmpRoot){ Remove-Item -Recurse -Force $tmpRoot }
 New-Item -ItemType Directory -Path $tmpRoot | Out-Null
 $bundleDir = Join-Path $tmpRoot 'bundle'
 New-Item -ItemType Directory -Path (Join-Path $bundleDir 'phases') -Force | Out-Null
-Copy-Item 'skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json' (Join-Path $bundleDir 'bundle.manifest.json')
+Copy-Item 'shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json' (Join-Path $bundleDir 'bundle.manifest.json')
 $manifestPath = Join-Path $bundleDir 'bundle.manifest.json'
 $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json -AsHashtable
 $manifest.custom_instructions = @{
@@ -159,16 +192,16 @@ $manifest.custom_instructions = @{
 ($manifest | ConvertTo-Json -Depth 40) + "`n" | Set-Content -Path $manifestPath
 $phases=@('scope','explore','clarify','architect','implement','verify','summarize')
 foreach($p in $phases){ Set-Content -Path (Join-Path $bundleDir "phases/$p.md") -Value ("# $p`ncompiled instructions for $p") -NoNewline }
-pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath $bundleDir -OutputPath (Join-Path $tmpRoot 'compact.json')
-pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode compact-to-directory -InputPath (Join-Path $tmpRoot 'compact.json') -OutputPath (Join-Path $tmpRoot 'roundtrip-bundle')
-pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath $bundleDir -OutputPath (Join-Path $tmpRoot 'compact-portable.json') -ContentMode portable
-pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode compact-to-directory -InputPath (Join-Path $tmpRoot 'compact-portable.json') -OutputPath (Join-Path $tmpRoot 'roundtrip-bundle-portable') -ContentMode hybrid
-$bundleSchema='schemas/fdf-effective-instructions-bundle.schema.json'
-$compactSchema='schemas/fdf-effective-instructions-compact.schema.json'
+pwsh -NoProfile -File shared/fdf/scripts/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath $bundleDir -OutputPath (Join-Path $tmpRoot 'compact.json')
+pwsh -NoProfile -File shared/fdf/scripts/convert-effective-instructions.ps1 -Mode compact-to-directory -InputPath (Join-Path $tmpRoot 'compact.json') -OutputPath (Join-Path $tmpRoot 'roundtrip-bundle')
+pwsh -NoProfile -File shared/fdf/scripts/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath $bundleDir -OutputPath (Join-Path $tmpRoot 'compact-portable.json') -ContentMode portable
+pwsh -NoProfile -File shared/fdf/scripts/convert-effective-instructions.ps1 -Mode compact-to-directory -InputPath (Join-Path $tmpRoot 'compact-portable.json') -OutputPath (Join-Path $tmpRoot 'roundtrip-bundle-portable') -ContentMode hybrid
+$bundleSchema='shared/fdf/schemas/fdf-effective-instructions-bundle.schema.json'
+$compactSchema='shared/fdf/schemas/fdf-effective-instructions-compact.schema.json'
 Test-Json -Path (Join-Path $tmpRoot 'roundtrip-bundle/bundle.manifest.json') -SchemaFile $bundleSchema
 Test-Json -Path (Join-Path $tmpRoot 'compact.json') -SchemaFile $compactSchema
-$bundlePortableSchema='schemas/fdf-effective-instructions-bundle-portable.schema.json'
-$compactPortableSchema='schemas/fdf-effective-instructions-compact-portable.schema.json'
+$bundlePortableSchema='shared/fdf/schemas/fdf-effective-instructions-bundle-portable.schema.json'
+$compactPortableSchema='shared/fdf/schemas/fdf-effective-instructions-compact-portable.schema.json'
 Test-Json -Path (Join-Path $tmpRoot 'roundtrip-bundle-portable/bundle.manifest.json') -SchemaFile $bundlePortableSchema
 Test-Json -Path (Join-Path $tmpRoot 'compact-portable.json') -SchemaFile $compactPortableSchema
 $roundtripManifest = Get-Content (Join-Path $tmpRoot 'roundtrip-bundle/bundle.manifest.json') -Raw | ConvertFrom-Json -AsHashtable
@@ -198,7 +231,7 @@ pwsh -File tools/generate-fdf-manifest.ps1
 ```
 
 Pass criteria:
-1. Output includes `Wrote manifest: .../skills/feature-driven-flow/extensions/manifest.json`.
+1. Output includes `Wrote manifest: .../shared/fdf/skills/feature-driven-flow/extensions/manifest.json`.
 
 ### B2. Combined Manifest Path Integrity
 
@@ -208,7 +241,7 @@ Intent:
 Command:
 
 ```powershell
-$m = Get-Content 'skills/feature-driven-flow/extensions/manifest.json' -Raw | ConvertFrom-Json
+$m = Get-Content 'shared/fdf/skills/feature-driven-flow/extensions/manifest.json' -Raw | ConvertFrom-Json
 $missing = @()
 foreach($r in $m.rules){ if(-not (Test-Path $r.file)){ $missing += "rule:$($r.id):$($r.file)" } }
 foreach($p in $m.profiles){ if(-not (Test-Path $p.file)){ $missing += "profile:$($p.id):$($p.file)" } }
@@ -228,7 +261,7 @@ Intent:
 Command:
 
 ```powershell
-$packs = Get-ChildItem 'skills/feature-driven-flow/packs' -Directory
+$packs = Get-ChildItem 'shared/fdf/skills/feature-driven-flow/packs' -Directory
 $missing=@()
 foreach($d in $packs){
   $mf = Join-Path $d.FullName 'manifest.json'
@@ -253,7 +286,7 @@ Intent:
 Command:
 
 ```powershell
-$m = Get-Content 'skills/feature-driven-flow/extensions/manifest.json' -Raw | ConvertFrom-Json
+$m = Get-Content 'shared/fdf/skills/feature-driven-flow/extensions/manifest.json' -Raw | ConvertFrom-Json
 $dupeRules = $m.rules | Group-Object id | Where-Object { $_.Count -gt 1 }
 $dupeProfiles = $m.profiles | Group-Object id | Where-Object { $_.Count -gt 1 }
 if((@($dupeRules).Count -eq 0) -and (@($dupeProfiles).Count -eq 0)){ 'MANIFEST_IDS_OK' } else { 'MANIFEST_IDS_DUPLICATE' }
@@ -271,7 +304,7 @@ Command:
 
 ```powershell
 $valid = @('scope','explore','clarify','architect','implement','verify','summarize')
-$m = Get-Content 'skills/feature-driven-flow/extensions/manifest.json' -Raw | ConvertFrom-Json
+$m = Get-Content 'shared/fdf/skills/feature-driven-flow/extensions/manifest.json' -Raw | ConvertFrom-Json
 $bad = @()
 foreach($r in $m.rules){
   if($null -eq $r.applies_to_phases -or $r.applies_to_phases.Count -eq 0){ $bad += "$($r.id): empty"; continue }
@@ -293,10 +326,10 @@ Intent:
 Command:
 
 ```powershell
-$cfg = Get-Content 'skills/feature-driven-flow/settings.json' -Raw | ConvertFrom-Json
+$cfg = Get-Content 'shared/fdf/skills/feature-driven-flow/settings.json' -Raw | ConvertFrom-Json
 $miss=@()
 foreach($id in $cfg.packs.enabled){
-  if(-not (Test-Path (Join-Path 'skills/feature-driven-flow/packs' $id))){ $miss += $id }
+  if(-not (Test-Path (Join-Path 'shared/fdf/skills/feature-driven-flow/packs' $id))){ $miss += $id }
 }
 if($miss.Count -eq 0){ 'PACK_ENABLEMENT_OK' } else { 'PACK_ENABLEMENT_MISSING'; $miss }
 ```
@@ -312,7 +345,7 @@ Intent:
 Command:
 
 ```powershell
-rg -n "\.codex/feature-driven-flow/settings\.md|skills/feature-driven-flow/settings\.md|settings\.snapshot\.md|templates/settings\.md" README.md skills prompts tools docs/specification.md
+rg -n "\.codex/feature-driven-flow/settings\.md|shared/fdf/skills/feature-driven-flow/settings\.md|settings\.snapshot\.md|templates/settings\.md" README.md codex claude-code tools docs/specification.md
 ```
 
 Pass criteria:
@@ -329,7 +362,7 @@ Command:
 
 ```powershell
 $missing = @()
-$ruleFiles = Get-ChildItem -Recurse -File -Include *.md -Path 'skills/feature-driven-flow/extensions/rules','skills/feature-driven-flow/packs'
+$ruleFiles = Get-ChildItem -Recurse -File -Include *.md -Path 'shared/fdf/skills/feature-driven-flow/extensions/rules','shared/fdf/skills/feature-driven-flow/packs'
 foreach($f in $ruleFiles){
   $content = Get-Content $f.FullName -Raw
   $matches = [regex]::Matches($content,'`(\.\./\.\./templates/[^`]+)`')
@@ -383,8 +416,8 @@ Intent:
 Command:
 
 ```powershell
-$skill = Get-Content 'skills/feature-driven-flow/SKILL.md' -Raw
-$prompt = Get-Content 'prompts/fdf-start.md' -Raw
+$skill = Get-Content 'codex/skills/feature-driven-flow/SKILL.md' -Raw
+$prompt = Get-Content 'codex/prompts/fdf-start.md' -Raw
 "SKILL_has_7_phase_contract=$($skill -match 'Run Phase 1 Scope\.' -and $skill -match 'Run Phase 7 Summarize\.')"
 "PROMPT_has_7_phase_requirement=$($prompt -match 'Execute all 7 phases in fixed order')"
 ```
@@ -400,8 +433,8 @@ Intent:
 Command:
 
 ```powershell
-$ext = Get-Content 'skills/feature-driven-flow/references/extension-system.md' -Raw
-$settingsRule = Get-Content 'skills/feature-driven-flow/extensions/rules/settings-policy.md' -Raw
+$ext = Get-Content 'shared/fdf/skills/feature-driven-flow/references/extension-system.md' -Raw
+$settingsRule = Get-Content 'shared/fdf/skills/feature-driven-flow/extensions/rules/settings-policy.md' -Raw
 $spec = Get-Content 'docs/specification.md' -Raw
 "EXT_precedence_mentions_settings_json=$($ext -match 'settings\.json')"
 "SETTINGS_POLICY_json_paths=$($settingsRule -match 'skills/feature-driven-flow/settings\.json' -and $settingsRule -match '\.codex/feature-driven-flow/settings\.json')"
@@ -442,7 +475,7 @@ Intent:
 Command:
 
 ```powershell
-$promptFiles = Get-ChildItem prompts -File -Filter *.md | Select-Object -ExpandProperty Name
+$promptFiles = Get-ChildItem codex/prompts -File -Filter *.md | Select-Object -ExpandProperty Name
 $bad = @($promptFiles | Where-Object { $_ -ne 'fdf-start.md' -and -not $_.StartsWith('fdf-') })
 if($bad.Count -eq 0){ 'PROMPT_FILE_NAMING_OK' } else { 'PROMPT_FILE_NAMING_FAIL'; $bad }
 ```
@@ -458,7 +491,7 @@ Intent:
 Command:
 
 ```powershell
-rg -n "/prompts:(?!fdf-)[a-z]" -P README.md docs skills prompts
+rg -n "/prompts:(?!fdf-)[a-z]" -P README.md docs codex claude-code
 ```
 
 Pass criteria:
@@ -472,9 +505,9 @@ Intent:
 Command:
 
 ```powershell
-$settings = Get-Content 'skills/feature-driven-flow/settings.json' -Raw | ConvertFrom-Json
-$prompt = Get-Content 'prompts/fdf-start.md' -Raw
-$skill = Get-Content 'skills/feature-driven-flow/SKILL.md' -Raw
+$settings = Get-Content 'shared/fdf/skills/feature-driven-flow/settings.json' -Raw | ConvertFrom-Json
+$prompt = Get-Content 'codex/prompts/fdf-start.md' -Raw
+$skill = Get-Content 'codex/skills/feature-driven-flow/SKILL.md' -Raw
 "SETTINGS_STRICT_FLAG=$($settings.effective_instructions.export.require_all_custom_instruction_items_approved -eq $true)"
 "PROMPT_STRICT_GUIDANCE=$($prompt -match 'require_all_custom_instruction_items_approved')"
 "SKILL_STRICT_GUIDANCE=$($skill -match 'require_all_custom_instruction_items_approved')"
@@ -527,11 +560,10 @@ if(@($crlf).Count -eq 0){ 'LF_ONLY_OK' } else { 'LF_ONLY_FAIL'; $crlf }
 
 Pass criteria:
 1. `LF_ONLY_OK`.
-
-## 4) Enforced One-Command Validation Runner
+## 6) One-Command Validation Runner
 
 Use `tools/run-validation-cycle.ps1` to run Groups A-G in sequence and print a compact status table.
-This runner is fail-fast and exits non-zero when any `FAIL` check exists.
+This should be the default validation entrypoint.
 
 Standard run:
 
@@ -539,7 +571,7 @@ Standard run:
 pwsh -NoProfile -File tools/run-validation-cycle.ps1
 ```
 
-Strict SCM gate (fails when worktree is dirty):
+Strict SCM gate:
 
 ```powershell
 pwsh -NoProfile -File tools/run-validation-cycle.ps1 -FailOnDirtyWorktree
@@ -550,11 +582,21 @@ Optional flags:
 1. `-SkipConversionRoundtrip`
 2. `-SkipManifestRegeneration`
 
-## 5) Release Gate Recommendation
+## 7) Release Gate Recommendation
 
 Before final merge:
 
 1. All checks in Groups A-E and G must pass.
-2. Group F must be explicitly reviewed and accepted (`WARN` is allowed only when policy permits).
-3. `tools/run-validation-cycle.ps1` should be the default pre-merge gate in CI/local pre-merge.
+2. Group F must be explicitly reviewed and accepted.
+3. `tools/run-validation-cycle.ps1` should be the default pre-merge gate in CI and local release checks.
 4. Manifest regeneration must be committed if changed.
+
+## 8) Document Boundary
+
+This playbook answers:
+
+1. what to run
+2. how to interpret failures
+3. what counts as a release gate
+
+It does not redefine FDF runtime behavior. Keep behavior changes in `docs/specification.md` and repository-layout changes in `docs/fdf-cross-agent-architecture.md`.

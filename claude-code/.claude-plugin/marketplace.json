@@ -1,0 +1,24 @@
+{
+  "name": "quasarbyte-plugins",
+  "owner": {
+    "name": "QuasarByte"
+  },
+  "metadata": {
+    "description": "Claude Code plugins published by QuasarByte",
+    "version": "1.2.0"
+  },
+  "plugins": [
+    {
+      "name": "feature-driven-flow",
+      "source": "./plugins/feature-driven-flow",
+      "description": "Feature-Driven-Flow (FDF): a structured 7-phase AI delivery framework for non-trivial feature development. Provides scoped intent, repository exploration, ambiguity resolution, design options, controlled implementation, assurance, and end-state reporting.",
+      "version": "1.2.0",
+      "author": {
+        "name": "QuasarByte"
+      },
+      "repository": "https://github.com/QuasarByte/feature-driven-flow-claude",
+      "license": "MIT",
+      "tags": ["workflow", "feature", "delivery", "phases", "ai-delivery"]
+    }
+  ]
+}

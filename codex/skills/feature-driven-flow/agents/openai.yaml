@@ -1,0 +1,7 @@
+version: 1
+policy:
+  allow_implicit_invocation: false
+interface:
+  display_name: Feature-Driven-Flow Conductor
+  short_description: Coordinate a 7-phase workflow with explicit decisions and phase-by-phase rule selection.
+  default_prompt: Deliver this feature with feature-driven-flow, propose a profile selection (optional) plus a compiled phase-by-phase rule matrix, and enforce core checkpoints.

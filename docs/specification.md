@@ -1,24 +1,27 @@
 # Feature-Driven-Flow Specification
 
 Date: 2026-03-04
-Repository: `codex-feature-driven-flow`
+Repository: `feature-driven-flow`
 
 ## 1. Purpose
 
-Feature-Driven-Flow (FDF) is a markdown-first workflow package for running non-trivial feature delivery in a consistent, auditable way using an LLM agent (Codex by default).
+This document is the runtime and artifact specification for Feature-Driven-Flow (FDF).
 
-Design goals:
+Use it for:
 
-1. Keep the core stable and minimal ("micro-core").
-2. Move phase behavior into declarative rules and reusable profiles.
-3. Support team/async workflows via versionable artifacts (packs).
-4. Make execution auditable: every phase produces structured outputs and gate checks derived from active rules.
+1. workflow semantics
+2. rule, profile, and matrix behavior
+3. artifact contracts
+4. settings and precedence
+5. local customization model
 
-Non-goals:
+Use other docs for:
 
-1. No required executable runtime engine for rules (script-free by default).
-2. No attempt to replace source control or issue trackers; FDF produces artifacts compatible with them.
-3. No multi-agent orchestration requirement (specialist skills are optional lenses).
+1. repository and packaging layout: `docs/fdf-cross-agent-architecture.md`
+2. validation procedures: `docs/validation-types-playbook.md`
+3. Claude release repo details: `docs/distribution/claude-feature-driven-flow-repo-spec.md`
+
+Feature-Driven-Flow (FDF) is a markdown-first workflow package for running non-trivial feature delivery in a consistent, auditable way using an LLM agent.
 
 ## 2. Core Concepts
 
@@ -30,7 +33,7 @@ FDF always runs 7 phases in fixed order:
 
 Phase intent and hard stops are documented in:
 
-`skills/feature-driven-flow/references/phases.md`
+`shared/fdf/skills/feature-driven-flow/references/phases.md`
 
 ### 2.2 Rules
 
@@ -41,7 +44,7 @@ A rule is a phase-scoped policy unit defined in markdown. Rules:
 3. define verifiable `checks` used to derive phase checklists
 4. define required `outputs`
 
-Rule schema: `skills/feature-driven-flow/references/rule-model.md`
+Rule schema: `shared/fdf/skills/feature-driven-flow/references/rule-model.md`
 
 ### 2.3 Profiles
 
@@ -49,14 +52,14 @@ A profile is a reusable policy bundle that selects rules and compiles down to a 
 
 Key principle: profiles are inputs; the compiled rule matrix is the canonical execution plan.
 
-Profile schema: `skills/feature-driven-flow/references/profile-model.md`
+Profile schema: `shared/fdf/skills/feature-driven-flow/references/profile-model.md`
 
 Conventions:
 
 1. Base profile ~= `strictness` level (`lean|baseline|hardened`)
 2. Overlay profile ~= `concern` surface (`security|performance|operations|release|testing|compatibility|...`)
 
-### 2.4 Rule Matrix (Canonical Execution Artifact)
+### 2.4 Effective Rule Matrix (Canonical Execution Artifact)
 
 The "rule matrix" is the phase-by-phase list of rule IDs selected for the run:
 
@@ -74,7 +77,7 @@ Matrix change after Scope requires:
 1. before/after diff
 2. explicit approval
 
-Template: `skills/feature-driven-flow/templates/rule-matrix-diff.md`
+Template: `shared/fdf/skills/feature-driven-flow/templates/rule-matrix-diff.md`
 
 ### 2.4.1 Resolution Pipeline (Assets -> Matrix -> Instructions)
 
@@ -103,11 +106,11 @@ To reduce token usage and improve session portability, FDF supports reusable Eff
 
 Canonical template:
 
-`skills/feature-driven-flow/templates/effective-rule-matrix.json`
+`shared/fdf/skills/feature-driven-flow/templates/effective-rule-matrix.json`
 
 Schema:
 
-`schemas/fdf-effective-matrix.schema.json`
+`shared/fdf/schemas/fdf-effective-matrix.schema.json`
 
 Input modes at Scope:
 
@@ -141,10 +144,10 @@ Formats:
 
 Schemas:
 
-1. `schemas/fdf-effective-instructions-bundle.schema.json`
-2. `schemas/fdf-effective-instructions-compact.schema.json`
-3. `schemas/fdf-effective-instructions-bundle-portable.schema.json`
-4. `schemas/fdf-effective-instructions-compact-portable.schema.json`
+1. `shared/fdf/schemas/fdf-effective-instructions-bundle.schema.json`
+2. `shared/fdf/schemas/fdf-effective-instructions-compact.schema.json`
+3. `shared/fdf/schemas/fdf-effective-instructions-bundle-portable.schema.json`
+4. `shared/fdf/schemas/fdf-effective-instructions-compact-portable.schema.json`
 
 Content modes:
 
@@ -164,7 +167,7 @@ Conversion support:
 
 1. Directory bundle -> compact
 2. Compact -> directory bundle
-3. Tool: `tools/convert-effective-instructions.ps1`
+3. Tool: `shared/fdf/scripts/convert-effective-instructions.ps1`
 4. Converter supports content mode: `reference|portable|hybrid|preserve`
 
 Tradeoffs and user notice:
@@ -181,13 +184,13 @@ Settings are versionable JSON used to avoid hardcoding paths/modes into rule tex
 Settings locations:
 
 1. Global defaults (this distribution):
-   - `skills/feature-driven-flow/settings.json`
+   - `shared/fdf/skills/feature-driven-flow/settings.json`
 2. Repository-local overrides (target repo):
    - `.codex/feature-driven-flow/settings.json`
 3. Optional run snapshot (when persistence is enabled):
    - `<run_root_dir>/<run_id>/settings.snapshot.json`
 
-Settings spec: `skills/feature-driven-flow/references/settings.md`
+Settings spec: `shared/fdf/skills/feature-driven-flow/references/settings.md`
 
 Relevant matrix settings:
 
@@ -197,11 +200,11 @@ Relevant matrix settings:
 4. `effective_instructions.export.*` (bundle/compact export behavior, content mode policy, and default path policy)
 5. `effective_instructions.*.allow_custom_instructions` and confirmation/approval flags (custom instructions import/export behavior)
 
-### 2.8 Packs ("Repositories of Repositories")
+### 2.8 Packs
 
 Packs are optional asset bundles that add rules/profiles/templates/references without modifying the micro-core.
 
-Pack spec: `skills/feature-driven-flow/references/packs.md`
+Pack spec: `shared/fdf/skills/feature-driven-flow/references/packs.md`
 
 Packs are enabled per repo via settings:
 
@@ -211,7 +214,7 @@ Packs are enabled per repo via settings:
 
 Specialist skills are optional lenses for Explore/Architect/Verify. They must not introduce new requirements beyond active rules.
 
-Reference: `skills/feature-driven-flow/references/specialist-skills.md`
+Reference: `shared/fdf/skills/feature-driven-flow/references/specialist-skills.md`
 
 ## 3. Execution Contract
 
@@ -219,11 +222,11 @@ Reference: `skills/feature-driven-flow/references/specialist-skills.md`
 
 Entrypoint prompt:
 
-`prompts/fdf-start.md`
+`codex/prompts/fdf-start.md`
 
 Conductor skill:
 
-`skills/feature-driven-flow/SKILL.md`
+`codex/skills/feature-driven-flow/SKILL.md`
 
 Core invariants enforced by the conductor:
 
@@ -243,7 +246,7 @@ Each phase should produce a structured output including:
 4. checklist results (derived from active rules)
 5. decision log, risks, artifacts, traceability, open questions
 
-Template: `skills/feature-driven-flow/templates/structured-phase-output.md`
+Template: `shared/fdf/skills/feature-driven-flow/templates/structured-phase-output.md`
 
 ### 3.3 Gates and Checklists
 
@@ -252,7 +255,7 @@ Template: `skills/feature-driven-flow/templates/structured-phase-output.md`
 3. If any blocking item exists, `gate_status` must be `blocked`.
 4. Phase transition requires `gate_status: ready`.
 
-Reference: `skills/feature-driven-flow/references/checklists.md`
+Reference: `shared/fdf/skills/feature-driven-flow/references/checklists.md`
 
 ## 4. Precedence and Conflict Resolution
 
@@ -277,7 +280,7 @@ flowchart TB
   I1["Core invariants<br/>phase order, gates"] --> I2["AGENTS.md policy"] --> I3["Settings precedence<br/>global -> repo -> snapshot -> user-confirmed"] --> I4["Pack enablement<br/>asset availability"] --> I5["Confirmed Effective Rule Matrix"] --> I6["Active rules<br/>shared then local refinements"]
 ```
 
-Reference: `skills/feature-driven-flow/references/extension-system.md`
+Reference: `shared/fdf/skills/feature-driven-flow/references/extension-system.md`
 
 ## 5. Scope Inference and Context Model
 
@@ -290,23 +293,23 @@ In Scope, FDF records structured context fields to reduce hidden assumptions and
 5. optional `compliance_mode`
 6. optional sensitivity flags (`handles_sensitive_data`, `prod_operated`, `performance_critical`)
 
-Reference: `skills/feature-driven-flow/references/context-model.md`
+Reference: `shared/fdf/skills/feature-driven-flow/references/context-model.md`
 
 Scope rule requiring this:
 
-`skills/feature-driven-flow/extensions/rules/scope-baseline.md`
+`shared/fdf/skills/feature-driven-flow/extensions/rules/scope-baseline.md`
 
-## 6. Micro-Core vs Packs
+## 6. Asset Model
 
 ### 6.1 Micro-Core Assets
 
 Micro-core shared rules:
 
-`skills/feature-driven-flow/extensions/rules/*.md`
+`shared/fdf/skills/feature-driven-flow/extensions/rules/*.md`
 
 Micro-core shared profiles:
 
-`skills/feature-driven-flow/extensions/profiles/*.md`
+`shared/fdf/skills/feature-driven-flow/extensions/profiles/*.md`
 
 Micro-core should contain:
 
@@ -318,7 +321,7 @@ Micro-core should contain:
 
 Packs live under:
 
-`skills/feature-driven-flow/packs/<pack_id>/...`
+`shared/fdf/skills/feature-driven-flow/packs/<pack_id>/...`
 
 Current packs:
 
@@ -343,11 +346,11 @@ Key artifacts:
 3. team packets (TUI markdown): `<packets_dir>/...`
 4. portability exports (optional): `RUNBOOK.md`, `state.json`, `conversation-export.md`
 
-Reference: `skills/feature-driven-flow/packs/async-collab/references/persistence.md`
+Reference: `shared/fdf/skills/feature-driven-flow/packs/async-collab/references/persistence.md`
 
-## 8. Manifests (Index / "Compile Input")
+## 8. Manifests
 
-Manifests provide a machine-readable index of available assets to reduce scanning overhead and help other tools/LLMs discover rules/profiles/templates/references.
+Manifests provide a machine-readable index of available assets. They are discovery and tooling inputs, not a separate behavioral source of truth.
 
 Generated by:
 
@@ -356,19 +359,21 @@ Generated by:
 Outputs:
 
 1. Combined manifest (core + packs):
-   - `skills/feature-driven-flow/extensions/manifest.json`
+   - `shared/fdf/skills/feature-driven-flow/extensions/manifest.json`
 2. Core pack manifest:
-   - `skills/feature-driven-flow/manifest.json`
+   - `shared/fdf/skills/feature-driven-flow/manifest.json`
 3. Per-pack manifests:
-   - `skills/feature-driven-flow/packs/<pack_id>/manifest.json`
+   - `shared/fdf/skills/feature-driven-flow/packs/<pack_id>/manifest.json`
 
-Reference: `skills/feature-driven-flow/references/asset-index.md`
+Reference: `shared/fdf/skills/feature-driven-flow/references/asset-index.md`
 
-## 9. Validation Tooling (Optional)
+## 9. Validation Boundary
 
-Validation is optional (the workflow can run without scripts), but recommended for contributor quality.
+Validation is optional for runtime use, but recommended for contributors and release work.
 
-Validator script:
+This specification defines what must be true. For operational sequencing, commands, and failure triage, use `docs/validation-types-playbook.md`.
+
+Primary validator script:
 
 `tools/validate-fdf-assets.ps1`
 
@@ -378,14 +383,14 @@ It checks:
 2. `applies_to_phases` uses valid phases
 3. profile ids are unique across core + packs (+ local packs if present)
 4. profile `always` rules reference existing rule ids
-5. settings files conform to `schemas/fdf-settings.schema.json`
-6. effective matrix artifacts conform to `schemas/fdf-effective-matrix.schema.json` (template required, repo-local optional)
-7. effective instructions bundle artifacts conform to `schemas/fdf-effective-instructions-bundle.schema.json` (template required, repo-local optional)
-8. effective instructions compact artifacts conform to `schemas/fdf-effective-instructions-compact.schema.json` (template required, repo-local optional)
-9. effective instructions bundle portable artifacts conform to `schemas/fdf-effective-instructions-bundle-portable.schema.json` (template required, repo-local optional)
-10. effective instructions compact portable artifacts conform to `schemas/fdf-effective-instructions-compact-portable.schema.json` (template required, repo-local optional)
+5. settings files conform to `shared/fdf/schemas/fdf-settings.schema.json`
+6. effective matrix artifacts conform to `shared/fdf/schemas/fdf-effective-matrix.schema.json` (template required, repo-local optional)
+7. effective instructions bundle artifacts conform to `shared/fdf/schemas/fdf-effective-instructions-bundle.schema.json` (template required, repo-local optional)
+8. effective instructions compact artifacts conform to `shared/fdf/schemas/fdf-effective-instructions-compact.schema.json` (template required, repo-local optional)
+9. effective instructions bundle portable artifacts conform to `shared/fdf/schemas/fdf-effective-instructions-bundle-portable.schema.json` (template required, repo-local optional)
+10. effective instructions compact portable artifacts conform to `shared/fdf/schemas/fdf-effective-instructions-compact-portable.schema.json` (template required, repo-local optional)
 
-Reference: `skills/feature-driven-flow/references/asset-validation.md`
+Reference: `shared/fdf/skills/feature-driven-flow/references/asset-validation.md`
 
 ## 10. Local Customization (Target Repo)
 
@@ -425,3 +430,27 @@ Local overlays must follow the same schemas as shared assets.
    - enable `async-collab` pack via settings
    - share packet markdown via VCS/email/messenger
    - resume by pointing any agent to the run directory + `RUNBOOK.md` (when enabled)
+
+## 12. Specialist Skills and Delegation Policy
+
+Specialist skills are internal execution lenses, not a public API.
+
+Rules:
+
+1. They must not add requirements beyond active rules and conductor invariants.
+2. They may be invoked inline or through delegated execution depending on agent capabilities and task shape.
+3. User-facing entry remains prompts in Codex and namespaced slash commands in Claude Code marketplace installs.
+
+Delegation guidance:
+
+1. Claude Code may delegate specialist work to subagents when bounded isolation is useful.
+2. Codex may delegate coarse-grained tasks to child agents, but specialist skills should remain instruction modules first.
+3. Small or tightly coupled phase work should stay inline with the conductor.
+
+## 13. Summary of Boundaries
+
+Keep these boundaries explicit when editing the repo:
+
+1. `docs/fdf-cross-agent-architecture.md` - source layout and packaging model
+2. this document - runtime behavior and artifact contracts
+3. `docs/validation-types-playbook.md` - validation commands and release checks

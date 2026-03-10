@@ -74,13 +74,13 @@ function Test-NoCRLF {
 
 function Convert-ManifestsToLF {
   $files = @(
-    "skills/feature-driven-flow/manifest.json",
-    "skills/feature-driven-flow/extensions/manifest.json",
-    "skills/feature-driven-flow/packs/async-collab/manifest.json",
-    "skills/feature-driven-flow/packs/hardening/manifest.json",
-    "skills/feature-driven-flow/packs/observability-lite/manifest.json",
-    "skills/feature-driven-flow/packs/presets/manifest.json",
-    "skills/feature-driven-flow/packs/quality/manifest.json"
+    "shared/fdf/skills/feature-driven-flow/manifest.json",
+    "shared/fdf/skills/feature-driven-flow/extensions/manifest.json",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/manifest.json",
+    "shared/fdf/skills/feature-driven-flow/packs/hardening/manifest.json",
+    "shared/fdf/skills/feature-driven-flow/packs/observability-lite/manifest.json",
+    "shared/fdf/skills/feature-driven-flow/packs/presets/manifest.json",
+    "shared/fdf/skills/feature-driven-flow/packs/quality/manifest.json"
   )
   foreach ($file in $files) {
     if (-not (Test-Path $file)) { continue }
@@ -93,19 +93,19 @@ function Convert-ManifestsToLF {
 try {
   # A1
   try {
-    $schema = "schemas/fdf-settings.schema.json"
-    $ok = (Test-Json -Path "skills/feature-driven-flow/settings.json" -SchemaFile $schema) -and
-      (Test-Json -Path "skills/feature-driven-flow/templates/settings.json" -SchemaFile $schema)
-    $matrixSchema = "schemas/fdf-effective-matrix.schema.json"
-    $ok = $ok -and (Test-Json -Path "skills/feature-driven-flow/templates/effective-rule-matrix.json" -SchemaFile $matrixSchema)
-    $bundleSchema = "schemas/fdf-effective-instructions-bundle.schema.json"
-    $ok = $ok -and (Test-Json -Path "skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json" -SchemaFile $bundleSchema)
-    $compactSchema = "schemas/fdf-effective-instructions-compact.schema.json"
-    $ok = $ok -and (Test-Json -Path "skills/feature-driven-flow/templates/effective-instructions-compact.json" -SchemaFile $compactSchema)
-    $bundlePortableSchema = "schemas/fdf-effective-instructions-bundle-portable.schema.json"
-    $ok = $ok -and (Test-Json -Path "skills/feature-driven-flow/templates/effective-instructions-bundle-portable.manifest.json" -SchemaFile $bundlePortableSchema)
-    $compactPortableSchema = "schemas/fdf-effective-instructions-compact-portable.schema.json"
-    $ok = $ok -and (Test-Json -Path "skills/feature-driven-flow/templates/effective-instructions-compact-portable.json" -SchemaFile $compactPortableSchema)
+    $schema = "shared/fdf/schemas/fdf-settings.schema.json"
+    $ok = (Test-Json -Path "shared/fdf/skills/feature-driven-flow/settings.json" -SchemaFile $schema) -and
+      (Test-Json -Path "shared/fdf/skills/feature-driven-flow/templates/settings.json" -SchemaFile $schema)
+    $matrixSchema = "shared/fdf/schemas/fdf-effective-matrix.schema.json"
+    $ok = $ok -and (Test-Json -Path "shared/fdf/skills/feature-driven-flow/templates/effective-rule-matrix.json" -SchemaFile $matrixSchema)
+    $bundleSchema = "shared/fdf/schemas/fdf-effective-instructions-bundle.schema.json"
+    $ok = $ok -and (Test-Json -Path "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json" -SchemaFile $bundleSchema)
+    $compactSchema = "shared/fdf/schemas/fdf-effective-instructions-compact.schema.json"
+    $ok = $ok -and (Test-Json -Path "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-compact.json" -SchemaFile $compactSchema)
+    $bundlePortableSchema = "shared/fdf/schemas/fdf-effective-instructions-bundle-portable.schema.json"
+    $ok = $ok -and (Test-Json -Path "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle-portable.manifest.json" -SchemaFile $bundlePortableSchema)
+    $compactPortableSchema = "shared/fdf/schemas/fdf-effective-instructions-compact-portable.schema.json"
+    $ok = $ok -and (Test-Json -Path "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-compact-portable.json" -SchemaFile $compactPortableSchema)
     Add-Result -Check "A1_SCHEMA_CONFORMANCE" -Status ($(if ($ok) { "PASS" } else { "FAIL" })) -Evidence "settings + matrix + effective-instructions templates"
   } catch {
     Add-Result -Check "A1_SCHEMA_CONFORMANCE" -Status "FAIL" -Evidence $_.Exception.Message
@@ -146,7 +146,7 @@ try {
 
       $bundleDir = Join-Path $tmpRoot "bundle"
       New-Item -ItemType Directory -Path (Join-Path $bundleDir "phases") -Force | Out-Null
-      Copy-Item "skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json" (Join-Path $bundleDir "bundle.manifest.json")
+      Copy-Item "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json" (Join-Path $bundleDir "bundle.manifest.json")
 
       $manifestPath = Join-Path $bundleDir "bundle.manifest.json"
       $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json -AsHashtable
@@ -174,15 +174,15 @@ try {
         Set-Content -Path (Join-Path $bundleDir "phases/$phase.md") -Value ("# $phase`ncompiled instructions for $phase") -NoNewline
       }
 
-      pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath $bundleDir -OutputPath (Join-Path $tmpRoot "compact.json") | Out-Null
-      pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode compact-to-directory -InputPath (Join-Path $tmpRoot "compact.json") -OutputPath (Join-Path $tmpRoot "roundtrip-bundle") | Out-Null
-      pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath $bundleDir -OutputPath (Join-Path $tmpRoot "compact-portable.json") -ContentMode portable | Out-Null
-      pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode compact-to-directory -InputPath (Join-Path $tmpRoot "compact-portable.json") -OutputPath (Join-Path $tmpRoot "roundtrip-bundle-portable") -ContentMode hybrid | Out-Null
+      pwsh -NoProfile -File shared/fdf/scripts/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath $bundleDir -OutputPath (Join-Path $tmpRoot "compact.json") | Out-Null
+      pwsh -NoProfile -File shared/fdf/scripts/convert-effective-instructions.ps1 -Mode compact-to-directory -InputPath (Join-Path $tmpRoot "compact.json") -OutputPath (Join-Path $tmpRoot "roundtrip-bundle") | Out-Null
+      pwsh -NoProfile -File shared/fdf/scripts/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath $bundleDir -OutputPath (Join-Path $tmpRoot "compact-portable.json") -ContentMode portable | Out-Null
+      pwsh -NoProfile -File shared/fdf/scripts/convert-effective-instructions.ps1 -Mode compact-to-directory -InputPath (Join-Path $tmpRoot "compact-portable.json") -OutputPath (Join-Path $tmpRoot "roundtrip-bundle-portable") -ContentMode hybrid | Out-Null
 
-      $bundleSchema = "schemas/fdf-effective-instructions-bundle.schema.json"
-      $compactSchema = "schemas/fdf-effective-instructions-compact.schema.json"
-      $bundlePortableSchema = "schemas/fdf-effective-instructions-bundle-portable.schema.json"
-      $compactPortableSchema = "schemas/fdf-effective-instructions-compact-portable.schema.json"
+      $bundleSchema = "shared/fdf/schemas/fdf-effective-instructions-bundle.schema.json"
+      $compactSchema = "shared/fdf/schemas/fdf-effective-instructions-compact.schema.json"
+      $bundlePortableSchema = "shared/fdf/schemas/fdf-effective-instructions-bundle-portable.schema.json"
+      $compactPortableSchema = "shared/fdf/schemas/fdf-effective-instructions-compact-portable.schema.json"
       $ok = (Test-Json -Path (Join-Path $tmpRoot "roundtrip-bundle/bundle.manifest.json") -SchemaFile $bundleSchema) -and
         (Test-Json -Path (Join-Path $tmpRoot "compact.json") -SchemaFile $compactSchema) -and
         (Test-Json -Path (Join-Path $tmpRoot "roundtrip-bundle-portable/bundle.manifest.json") -SchemaFile $bundlePortableSchema) -and
@@ -215,7 +215,7 @@ try {
 
   # B2/B3/B4/B5
   try {
-    $m = Get-Content "skills/feature-driven-flow/extensions/manifest.json" -Raw | ConvertFrom-Json
+    $m = Get-Content "shared/fdf/skills/feature-driven-flow/extensions/manifest.json" -Raw | ConvertFrom-Json
     $missing = @()
     foreach ($r in $m.rules) { if (-not (Test-Path $r.file)) { $missing += "rule:$($r.id):$($r.file)" } }
     foreach ($p in $m.profiles) { if (-not (Test-Path $p.file)) { $missing += "profile:$($p.id):$($p.file)" } }
@@ -223,7 +223,7 @@ try {
     foreach ($r in $m.references) { if (-not (Test-Path $r)) { $missing += "reference:$r" } }
     Add-Result -Check "B2_COMBINED_MANIFEST_PATHS" -Status ($(if ($missing.Count -eq 0) { "PASS" } else { "FAIL" })) -Evidence "missing=$($missing.Count)"
 
-    $packs = Get-ChildItem "skills/feature-driven-flow/packs" -Directory
+    $packs = Get-ChildItem "shared/fdf/skills/feature-driven-flow/packs" -Directory
     $missing2 = @()
     foreach ($d in $packs) {
       $mf = Join-Path $d.FullName "manifest.json"
@@ -256,10 +256,10 @@ try {
 
   # C1
   try {
-    $cfg = Get-Content "skills/feature-driven-flow/settings.json" -Raw | ConvertFrom-Json
+    $cfg = Get-Content "shared/fdf/skills/feature-driven-flow/settings.json" -Raw | ConvertFrom-Json
     $miss = @()
     foreach ($id in $cfg.packs.enabled) {
-      if (-not (Test-Path (Join-Path "skills/feature-driven-flow/packs" $id))) { $miss += $id }
+      if (-not (Test-Path (Join-Path "shared/fdf/skills/feature-driven-flow/packs" $id))) { $miss += $id }
     }
     Add-Result -Check "C1_PACK_ENABLEMENT" -Status ($(if ($miss.Count -eq 0) { "PASS" } else { "FAIL" })) -Evidence "missing=$($miss.Count)"
   } catch {
@@ -268,7 +268,7 @@ try {
 
   # C2
   try {
-    $hits = rg -n "\.codex/feature-driven-flow/settings\.md|skills/feature-driven-flow/settings\.md|settings\.snapshot\.md|templates/settings\.md" README.md skills prompts tools docs/specification.md | Out-String
+    $hits = rg -n "\.codex/feature-driven-flow/settings\.md|skills/feature-driven-flow/settings\.md|settings\.snapshot\.md|templates/settings\.md" README.md codex claude-code tools docs/specification.md | Out-String
     $ok = [string]::IsNullOrWhiteSpace($hits)
     Add-Result -Check "C2_SETTINGS_PATH_POLICY" -Status ($(if ($ok) { "PASS" } else { "FAIL" })) -Evidence ($(if ($ok) { "no matches" } else { "found deprecated settings markdown path" }))
   } catch {
@@ -278,7 +278,7 @@ try {
   # D1
   try {
     $missing = @()
-    $ruleFiles = Get-ChildItem -Recurse -File -Include *.md -Path "skills/feature-driven-flow/extensions/rules", "skills/feature-driven-flow/packs"
+    $ruleFiles = Get-ChildItem -Recurse -File -Include *.md -Path "shared/fdf/skills/feature-driven-flow/extensions/rules", "shared/fdf/skills/feature-driven-flow/packs"
     foreach ($f in $ruleFiles) {
       $content = Get-Content $f.FullName -Raw
       $matches = [regex]::Matches($content, '`(\.\./\.\./templates/[^`]+)`')
@@ -320,8 +320,8 @@ try {
 
   # E1
   try {
-    $skill = Get-Content "skills/feature-driven-flow/SKILL.md" -Raw
-    $prompt = Get-Content "prompts/fdf-start.md" -Raw
+    $skill = Get-Content "claude-code/plugins/feature-driven-flow/skills/feature-driven-flow/behavior.md" -Raw
+    $prompt = Get-Content "codex/prompts/fdf-start.md" -Raw
     $ok = ($skill -match "Run Phase 1 Scope\." -and $skill -match "Run Phase 7 Summarize\.") -and ($prompt -match "Execute all 7 phases in fixed order")
     Add-Result -Check "E1_WORKFLOW_CONTRACT" -Status ($(if ($ok) { "PASS" } else { "FAIL" })) -Evidence "skill+prompt contract markers"
   } catch {
@@ -330,11 +330,11 @@ try {
 
   # E2
   try {
-    $ext = Get-Content "skills/feature-driven-flow/references/extension-system.md" -Raw
-    $settingsRule = Get-Content "skills/feature-driven-flow/extensions/rules/settings-policy.md" -Raw
+    $ext = Get-Content "shared/fdf/skills/feature-driven-flow/references/extension-system.md" -Raw
+    $settingsRule = Get-Content "shared/fdf/skills/feature-driven-flow/extensions/rules/settings-policy.md" -Raw
     $spec = Get-Content "docs/specification.md" -Raw
     $ok = ($ext -match "settings\.json") -and
-      ($settingsRule -match "skills/feature-driven-flow/settings\.json" -and $settingsRule -match "\.codex/feature-driven-flow/settings\.json") -and
+      ($settingsRule -match "feature-driven-flow/settings\.json" -and $settingsRule -match "\.codex/feature-driven-flow/settings\.json") -and
       ($spec -match "settings\.json" -and $spec -match "settings\.snapshot\.json")
     Add-Result -Check "E2_SETTINGS_PRECEDENCE_ALIGNMENT" -Status ($(if ($ok) { "PASS" } else { "FAIL" })) -Evidence "extension+rule+spec alignment"
   } catch {
@@ -360,7 +360,7 @@ try {
 
   # G1
   try {
-    $promptFiles = Get-ChildItem "prompts" -File -Filter *.md | Select-Object -ExpandProperty Name
+    $promptFiles = Get-ChildItem "codex/prompts" -File -Filter *.md | Select-Object -ExpandProperty Name
     $bad = @($promptFiles | Where-Object { $_ -ne "fdf-start.md" -and -not $_.StartsWith("fdf-") })
     Add-Result -Check "G1_PROMPT_FILE_NAMING" -Status ($(if ($bad.Count -eq 0) { "PASS" } else { "FAIL" })) -Evidence "invalid=$($bad.Count)"
   } catch {
@@ -369,7 +369,7 @@ try {
 
   # G2
   try {
-    $hits = rg -n "/prompts:(?!fdf-)[a-z]" -P README.md docs skills prompts | Out-String
+    $hits = rg -n "/prompts:(?!fdf-)[a-z]" -P README.md docs codex claude-code | Out-String
     $ok = [string]::IsNullOrWhiteSpace($hits)
     Add-Result -Check "G2_PROMPT_COMMAND_PREFIX" -Status ($(if ($ok) { "PASS" } else { "FAIL" })) -Evidence ($(if ($ok) { "all prefixed" } else { "found non-prefixed refs" }))
   } catch {
@@ -378,13 +378,13 @@ try {
 
   # G3
   try {
-    $settings = Get-Content "skills/feature-driven-flow/settings.json" -Raw | ConvertFrom-Json
-    $prompt = Get-Content "prompts/fdf-start.md" -Raw
-    $skill = Get-Content "skills/feature-driven-flow/SKILL.md" -Raw
+    $settings = Get-Content "shared/fdf/skills/feature-driven-flow/settings.json" -Raw | ConvertFrom-Json
+    $prompt = Get-Content "codex/prompts/fdf-start.md" -Raw
+    $behavior = Get-Content "claude-code/plugins/feature-driven-flow/skills/feature-driven-flow/behavior.md" -Raw
     $ok = $settings.effective_instructions.export.require_all_custom_instruction_items_approved -eq $true -and
       $prompt -match "require_all_custom_instruction_items_approved" -and
-      $skill -match "require_all_custom_instruction_items_approved"
-    Add-Result -Check "G3_STRICT_CUSTOM_INSTRUCTION_POLICY" -Status ($(if ($ok) { "PASS" } else { "FAIL" })) -Evidence "settings+prompt+skill aligned"
+      $behavior -match "require_all_custom_instruction_items_approved"
+    Add-Result -Check "G3_STRICT_CUSTOM_INSTRUCTION_POLICY" -Status ($(if ($ok) { "PASS" } else { "FAIL" })) -Evidence "settings+prompt+behavior aligned"
   } catch {
     Add-Result -Check "G3_STRICT_CUSTOM_INSTRUCTION_POLICY" -Status "FAIL" -Evidence $_.Exception.Message
   }

@@ -1,0 +1,596 @@
+{
+  "schema": "fdf/manifest.v1",
+  "generated_at": "2026-03-10T00:28:31",
+  "packs": [
+    {
+      "pack_id": "core",
+      "pack_root": "shared/fdf/skills/feature-driven-flow"
+    },
+    {
+      "pack_id": "async-collab",
+      "pack_root": "shared/fdf/skills/feature-driven-flow/packs/async-collab"
+    },
+    {
+      "pack_id": "hardening",
+      "pack_root": "shared/fdf/skills/feature-driven-flow/packs/hardening"
+    },
+    {
+      "pack_id": "observability-lite",
+      "pack_root": "shared/fdf/skills/feature-driven-flow/packs/observability-lite"
+    },
+    {
+      "pack_id": "presets",
+      "pack_root": "shared/fdf/skills/feature-driven-flow/packs/presets"
+    },
+    {
+      "pack_id": "quality",
+      "pack_root": "shared/fdf/skills/feature-driven-flow/packs/quality"
+    }
+  ],
+  "rules": [
+    {
+      "pack_id": "core",
+      "id": "architect-policy",
+      "title": "Architect Policy",
+      "tags": [
+        "process",
+        "architect"
+      ],
+      "applies_to_phases": [
+        "architect"
+      ],
+      "intent": "Produce clear architecture choices with explicit tradeoffs and user selection.",
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/rules/architect-policy.md"
+    },
+    {
+      "pack_id": "core",
+      "id": "clarify-policy",
+      "title": "Clarify Policy",
+      "tags": [
+        "process",
+        "clarify"
+      ],
+      "applies_to_phases": [
+        "clarify"
+      ],
+      "intent": "Resolve ambiguity before architecture and implementation decisions.",
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/rules/clarify-policy.md"
+    },
+    {
+      "pack_id": "core",
+      "id": "explore-baseline",
+      "title": "Explore Baseline",
+      "tags": [
+        "process",
+        "explore"
+      ],
+      "applies_to_phases": [
+        "explore"
+      ],
+      "intent": "Build an accurate repository behavior map before design and implementation.",
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/rules/explore-baseline.md"
+    },
+    {
+      "pack_id": "core",
+      "id": "implement-baseline",
+      "title": "Implement Baseline",
+      "tags": [
+        "process",
+        "implement"
+      ],
+      "applies_to_phases": [
+        "implement"
+      ],
+      "intent": "Execute approved changes safely and keep implementation aligned with confirmed scope.",
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/rules/implement-baseline.md"
+    },
+    {
+      "pack_id": "core",
+      "id": "inference-guardrails",
+      "title": "Inference Guardrails",
+      "tags": [
+        "process",
+        "inference"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "clarify",
+        "verify"
+      ],
+      "intent": "Keep runtime context inference explicit, testable, and stable through delivery.",
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/rules/inference-guardrails.md"
+    },
+    {
+      "pack_id": "core",
+      "id": "packs-policy",
+      "title": "Packs Policy (Asset Bundle Selection)",
+      "tags": [
+        "packs",
+        "settings",
+        "governance"
+      ],
+      "applies_to_phases": [
+        "scope"
+      ],
+      "intent": "Make enabled pack selection explicit so asset discovery is deterministic and portable across machines and LLM tools.",
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/rules/packs-policy.md"
+    },
+    {
+      "pack_id": "core",
+      "id": "scope-baseline",
+      "title": "Scope Baseline",
+      "tags": [
+        "process",
+        "scope"
+      ],
+      "applies_to_phases": [
+        "scope"
+      ],
+      "intent": "Establish shared understanding and lock the Effective Rule Matrix (phase-by-phase active rules) before execution.",
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/rules/scope-baseline.md"
+    },
+    {
+      "pack_id": "core",
+      "id": "settings-policy",
+      "title": "Settings Policy (Project/Framework Configuration)",
+      "tags": [
+        "settings",
+        "persistence",
+        "governance",
+        "team"
+      ],
+      "applies_to_phases": [
+        "scope"
+      ],
+      "intent": "Make configuration explicit and versionable, and reduce hardcoded behavior in rule text by loading settings and recording the effective settings for this run.",
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/rules/settings-policy.md"
+    },
+    {
+      "pack_id": "core",
+      "id": "summarize-policy",
+      "title": "Summarize Policy",
+      "tags": [
+        "process",
+        "summarize"
+      ],
+      "applies_to_phases": [
+        "summarize"
+      ],
+      "intent": "Produce a clear closure package for handoff and next actions.",
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/rules/summarize-policy.md"
+    },
+    {
+      "pack_id": "core",
+      "id": "verify-policy",
+      "title": "Verify Policy",
+      "tags": [
+        "process",
+        "verify"
+      ],
+      "applies_to_phases": [
+        "verify"
+      ],
+      "intent": "Close work with high-confidence findings and explicit user disposition.",
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/rules/verify-policy.md"
+    },
+    {
+      "pack_id": "async-collab",
+      "id": "async-decision-packets",
+      "title": "Async Decision Packets (Team TUI Exports)",
+      "tags": [
+        "team",
+        "async",
+        "persistence",
+        "handoff"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "clarify",
+        "architect",
+        "verify"
+      ],
+      "intent": "Export user/team questions and decision points into versionable markdown \"packets\" that can be shared outside the chat (email/messenger/VCS) and answered asynchronously.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/rules/async-decision-packets.md"
+    },
+    {
+      "pack_id": "async-collab",
+      "id": "conversation-export",
+      "title": "Conversation Export (Optional Transcript Snapshot)",
+      "tags": [
+        "persistence",
+        "portability",
+        "context",
+        "team"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "clarify",
+        "architect",
+        "verify",
+        "summarize"
+      ],
+      "intent": "Optionally export chat context into a versionable markdown file to support long pauses and cross-tool continuation when phase logs alone are insufficient.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/rules/conversation-export.md"
+    },
+    {
+      "pack_id": "async-collab",
+      "id": "flow-observability",
+      "title": "Flow Observability (Logging, Tracing, Persistence)",
+      "tags": [
+        "observability",
+        "logging",
+        "tracing",
+        "persistence",
+        "team"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "explore",
+        "clarify",
+        "architect",
+        "implement",
+        "verify",
+        "summarize"
+      ],
+      "intent": "Persist the workflow state as versionable markdown files so teams can pause/resume asynchronously and debug the delivery process over time.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/rules/flow-observability.md"
+    },
+    {
+      "pack_id": "async-collab",
+      "id": "runbook-export",
+      "title": "Runbook Export (Cross-Agent Resume)",
+      "tags": [
+        "persistence",
+        "portability",
+        "team"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "summarize"
+      ],
+      "intent": "Create a human- and agent-readable `RUNBOOK.md` in the run directory so the run can be resumed on other machines and with other LLM/agent tools.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/rules/runbook-export.md"
+    },
+    {
+      "pack_id": "async-collab",
+      "id": "state-export",
+      "title": "State Export (state.json)",
+      "tags": [
+        "persistence",
+        "portability",
+        "state"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "clarify",
+        "architect",
+        "implement",
+        "verify",
+        "summarize"
+      ],
+      "intent": "Export a minimal machine-readable snapshot of the run state for cross-agent portability (tools that prefer structured inputs).",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/rules/state-export.md"
+    },
+    {
+      "pack_id": "hardening",
+      "id": "compatibility-first",
+      "title": "Compatibility First",
+      "tags": [
+        "compatibility"
+      ],
+      "applies_to_phases": [
+        "explore",
+        "clarify",
+        "architect",
+        "verify"
+      ],
+      "intent": "Protect existing clients, integrations, and migration paths.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/hardening/extensions/rules/compatibility-first.md"
+    },
+    {
+      "pack_id": "hardening",
+      "id": "operations-ready",
+      "title": "Operations Ready",
+      "tags": [
+        "operations"
+      ],
+      "applies_to_phases": [
+        "explore",
+        "clarify",
+        "architect",
+        "verify"
+      ],
+      "intent": "Ensure deployable changes are operable and supportable in production.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/hardening/extensions/rules/operations-ready.md"
+    },
+    {
+      "pack_id": "hardening",
+      "id": "performance-targets",
+      "title": "Performance Targets",
+      "tags": [
+        "performance"
+      ],
+      "applies_to_phases": [
+        "explore",
+        "clarify",
+        "architect",
+        "verify"
+      ],
+      "intent": "Keep latency, throughput, and capacity behavior within expected targets.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/hardening/extensions/rules/performance-targets.md"
+    },
+    {
+      "pack_id": "hardening",
+      "id": "release-readiness-policy",
+      "title": "Release Readiness Policy",
+      "tags": [
+        "release"
+      ],
+      "applies_to_phases": [
+        "verify",
+        "summarize"
+      ],
+      "intent": "Ensure deploy-impacting changes have explicit go/no-go readiness.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/hardening/extensions/rules/release-readiness-policy.md"
+    },
+    {
+      "pack_id": "hardening",
+      "id": "security-baseline",
+      "title": "Security Baseline",
+      "tags": [
+        "security"
+      ],
+      "applies_to_phases": [
+        "explore",
+        "clarify",
+        "architect",
+        "verify"
+      ],
+      "intent": "Reduce security risk, data exposure, and unsafe failure behavior.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/hardening/extensions/rules/security-baseline.md"
+    },
+    {
+      "pack_id": "observability-lite",
+      "id": "observability-lite",
+      "title": "Observability Lite (Workflow Debug Notes)",
+      "tags": [
+        "observability",
+        "metrics",
+        "team"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "verify",
+        "summarize"
+      ],
+      "intent": "Capture a small, consistent set of workflow debugging notes (what changed, why, and where friction happened) to improve future runs.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/observability-lite/extensions/rules/observability-lite.md"
+    },
+    {
+      "pack_id": "quality",
+      "id": "engineering-principles",
+      "title": "Engineering Principles",
+      "tags": [
+        "engineering",
+        "quality"
+      ],
+      "applies_to_phases": [
+        "clarify",
+        "architect",
+        "implement",
+        "verify"
+      ],
+      "intent": "Keep delivery simple, maintainable, and aligned with KISS, DRY, SOLID, YAGNI, DDD, and TDD.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/quality/extensions/rules/engineering-principles.md"
+    },
+    {
+      "pack_id": "quality",
+      "id": "test-strategy-policy",
+      "title": "Test Strategy Policy",
+      "tags": [
+        "testing"
+      ],
+      "applies_to_phases": [
+        "architect",
+        "implement"
+      ],
+      "intent": "Define and enforce a concrete verification plan before and during implementation.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/quality/extensions/rules/test-strategy-policy.md"
+    }
+  ],
+  "profiles": [
+    {
+      "pack_id": "core",
+      "id": "lean-baseline",
+      "title": "Lean Baseline",
+      "intent": "Minimal governance while preserving the core seven-phase workflow, explicit approvals, and auditable outputs.\n\nUse when speed matters and risk surface is low-to-moderate.",
+      "extends": [],
+      "always_rules": [
+        "scope-baseline",
+        "explore-baseline",
+        "clarify-policy",
+        "architect-policy",
+        "implement-baseline",
+        "verify-policy",
+        "summarize-policy",
+        "inference-guardrails",
+        "settings-policy",
+        "packs-policy"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/extensions/profiles/lean-baseline.md"
+    },
+    {
+      "pack_id": "async-collab",
+      "id": "async-collab-overlay",
+      "title": "Async Collaboration Overlay",
+      "intent": "Enable persistence, async packets, and portability exports for team/offline workflows.",
+      "extends": [],
+      "always_rules": [
+        "flow-observability",
+        "async-decision-packets",
+        "runbook-export",
+        "state-export",
+        "conversation-export"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/profiles/async-collab-overlay.md"
+    },
+    {
+      "pack_id": "hardening",
+      "id": "hardening-overlay",
+      "title": "Hardening Overlay",
+      "intent": "Enable security/performance/ops/release/compatibility rules.",
+      "extends": [],
+      "always_rules": [
+        "security-baseline",
+        "operations-ready",
+        "performance-targets",
+        "release-readiness-policy",
+        "compatibility-first"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/hardening/extensions/profiles/hardening-overlay.md"
+    },
+    {
+      "pack_id": "observability-lite",
+      "id": "observability-lite-overlay",
+      "title": "Observability Lite Overlay",
+      "intent": "Enable the `observability-lite` rule.",
+      "extends": [],
+      "always_rules": [
+        "observability-lite"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/observability-lite/extensions/profiles/observability-lite-overlay.md"
+    },
+    {
+      "pack_id": "presets",
+      "id": "baseline",
+      "title": "Baseline",
+      "intent": "Default profile for non-trivial work: adds quality discipline and async collaboration on top of lean baseline.",
+      "extends": [
+        "lean-baseline"
+      ],
+      "always_rules": [
+        "engineering-principles",
+        "test-strategy-policy",
+        "flow-observability",
+        "async-decision-packets",
+        "runbook-export",
+        "state-export",
+        "conversation-export"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/presets/extensions/profiles/baseline.md"
+    },
+    {
+      "pack_id": "presets",
+      "id": "hardened",
+      "title": "Hardened",
+      "intent": "Higher-governance profile for production changes and elevated risk surfaces.\n\nThis profile composes baseline + hardening.",
+      "extends": [
+        "baseline"
+      ],
+      "always_rules": [
+        "security-baseline",
+        "operations-ready",
+        "performance-targets",
+        "release-readiness-policy",
+        "compatibility-first"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/presets/extensions/profiles/hardened.md"
+    },
+    {
+      "pack_id": "presets",
+      "id": "operations-overlay",
+      "title": "Operations Overlay",
+      "intent": "Enable operability-focused exploration, clarification, design, and verification.",
+      "extends": [],
+      "always_rules": [
+        "operations-ready"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/presets/extensions/profiles/operations-overlay.md"
+    },
+    {
+      "pack_id": "presets",
+      "id": "performance-overlay",
+      "title": "Performance Overlay",
+      "intent": "Enable performance target capture, hot-path focus, and verification notes.",
+      "extends": [],
+      "always_rules": [
+        "performance-targets"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/presets/extensions/profiles/performance-overlay.md"
+    },
+    {
+      "pack_id": "presets",
+      "id": "release-overlay",
+      "title": "Release Overlay",
+      "intent": "Enable explicit release readiness gating and go/no-go capture when release-impacting changes exist.",
+      "extends": [],
+      "always_rules": [
+        "release-readiness-policy"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/presets/extensions/profiles/release-overlay.md"
+    },
+    {
+      "pack_id": "presets",
+      "id": "security-overlay",
+      "title": "Security Overlay",
+      "intent": "Enable security-focused exploration, clarification, design, and verification.",
+      "extends": [],
+      "always_rules": [
+        "security-baseline"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/presets/extensions/profiles/security-overlay.md"
+    },
+    {
+      "pack_id": "quality",
+      "id": "quality-overlay",
+      "title": "Quality Overlay",
+      "intent": "Add engineering principles and an explicit test strategy gate.",
+      "extends": [],
+      "always_rules": [
+        "engineering-principles",
+        "test-strategy-policy"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/quality/extensions/profiles/quality-overlay.md"
+    }
+  ],
+  "templates": [
+    "shared/fdf/skills/feature-driven-flow/templates/architecture-options.md",
+    "shared/fdf/skills/feature-driven-flow/templates/clarifying-questions.md",
+    "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle-portable.manifest.json",
+    "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json",
+    "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-compact-portable.json",
+    "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-compact.json",
+    "shared/fdf/skills/feature-driven-flow/templates/effective-rule-matrix.json",
+    "shared/fdf/skills/feature-driven-flow/templates/execution-metrics.md",
+    "shared/fdf/skills/feature-driven-flow/templates/review-report.md",
+    "shared/fdf/skills/feature-driven-flow/templates/rule-matrix-diff.md",
+    "shared/fdf/skills/feature-driven-flow/templates/settings.json",
+    "shared/fdf/skills/feature-driven-flow/templates/structured-phase-output.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/conversation-export.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/packet-decision-tui.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/packet-questions-tui.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/run-index.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/runbook.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/state.json",
+    "shared/fdf/skills/feature-driven-flow/packs/hardening/templates/release-readiness-gate.md",
+    "shared/fdf/skills/feature-driven-flow/packs/quality/templates/test-strategy-gate.md"
+  ],
+  "references": [
+    "shared/fdf/skills/feature-driven-flow/references/asset-index.md",
+    "shared/fdf/skills/feature-driven-flow/references/asset-validation.md",
+    "shared/fdf/skills/feature-driven-flow/references/checklists.md",
+    "shared/fdf/skills/feature-driven-flow/references/context-model.md",
+    "shared/fdf/skills/feature-driven-flow/references/effective-instructions-reuse.md",
+    "shared/fdf/skills/feature-driven-flow/references/effective-matrix-reuse.md",
+    "shared/fdf/skills/feature-driven-flow/references/extension-system.md",
+    "shared/fdf/skills/feature-driven-flow/references/packs.md",
+    "shared/fdf/skills/feature-driven-flow/references/phase-contracts.md",
+    "shared/fdf/skills/feature-driven-flow/references/phases.md",
+    "shared/fdf/skills/feature-driven-flow/references/profile-model.md",
+    "shared/fdf/skills/feature-driven-flow/references/rule-model.md",
+    "shared/fdf/skills/feature-driven-flow/references/settings.md",
+    "shared/fdf/skills/feature-driven-flow/references/specialist-skills.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/references/persistence.md",
+    "shared/fdf/skills/feature-driven-flow/packs/presets/references/profile-recommendations.md"
+  ]
+}

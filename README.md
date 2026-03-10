@@ -1,25 +1,66 @@
-# Codex Feature-Driven-Flow (FDF)
+# Feature-Driven-Flow (FDF)
 
-Version: `1.1.0`
+Version: `1.2.0`
 
 ![Feature-Driven-Flow Cover](assets/images/fdf-cover-001.png)
 
 Feature-Driven-Flow is a markdown-first AI delivery framework for non-trivial changes.  
 It runs a fixed seven-phase workflow, compiles selected policies into a concrete rule matrix, and records auditable outputs through explicit gates.
 
+This repository is the source-of-truth development repo for the framework. It contains:
+
+1. the Codex implementation
+2. the Claude Code implementation
+3. the shared FDF runtime assets used by both
+
+Published runtime repositories:
+
+1. Codex distribution: [QuasarByte/feature-driven-flow-codex](https://github.com/QuasarByte/feature-driven-flow-codex)
+2. Claude Code distribution: [QuasarByte/feature-driven-flow-claude](https://github.com/QuasarByte/feature-driven-flow-claude)
+
 ## 2-Minute Start
 
-1. Install FDF prompts + skill into `CODEX_HOME`:
-   - `skills/* -> $CODEX_HOME/skills/`
-   - `prompts/*.md -> $CODEX_HOME/prompts/` (commands are `fdf-*`, entrypoint is `fdf-start`)
-2. Run FDF:
+Choose your runtime:
+
+1. Codex
+   - install from [QuasarByte/feature-driven-flow-codex](https://github.com/QuasarByte/feature-driven-flow-codex)
+   - user-facing entrypoint: `/prompts:fdf-start`
+2. Claude Code
+   - install from [QuasarByte/feature-driven-flow-claude](https://github.com/QuasarByte/feature-driven-flow-claude)
+   - user-facing entrypoint: `/feature-driven-flow:fdf-start`
+   - use the namespaced form as the supported marketplace command; bare `/fdf-start` may not be reliable across installs
+
+Codex example:
 ```text
 /prompts:fdf-start Create a simple console Java app that prints factorial(n). Use JDK 25 and Maven. Read n from argv.
 ```
-3. (Optional) Validate this repo before changes:
+
+Claude Code example:
+```text
+/feature-driven-flow:fdf-start Create a simple console Java app that prints factorial(n). Use JDK 25 and Maven. Read n from argv.
+```
+
+Optional source-repo validation before changes:
 ```powershell
 pwsh -NoProfile -File tools/run-validation-cycle.ps1
 ```
+
+
+## Maintainer Tooling
+
+Maintainer scripts require PowerShell 7 (`pwsh`) to be installed on Windows, macOS, or Linux.
+The `.sh` and `.cmd` wrappers are convenience entrypoints, but they still delegate to `pwsh`.
+
+Scripts that require `pwsh`:
+
+1. `tools/build-distribution-claude.ps1`
+2. `tools/build-distribution-codex.ps1`
+3. `tools/deploy-distribution-claude.ps1`
+4. `tools/deploy-distribution-codex.ps1`
+5. `tools/run-validation-cycle.ps1`
+6. `tools/validate-fdf-assets.ps1`
+7. `tools/generate-fdf-manifest.ps1`
+8. `shared/fdf/scripts/convert-effective-instructions.ps1`
 
 ## What This Framework Provides
 
@@ -59,28 +100,45 @@ Core invariants:
 
 Entry points:
 
-1. Prompt: `prompts/fdf-start.md`
-2. Conductor skill: `skills/feature-driven-flow/SKILL.md`
+1. Codex prompt: `codex/prompts/fdf-start.md`
+2. Claude Code slash command: `claude-code/plugins/feature-driven-flow/commands/fdf-start.md`
+3. Codex conductor skill: `codex/skills/feature-driven-flow/SKILL.md`
+4. Claude Code conductor skill: `claude-code/plugins/feature-driven-flow/skills/feature-driven-flow/SKILL.md`
 
 ## Repository Layout
 
-1. Prompts (commands): `prompts/fdf-*.md`
-2. Conductor skill: `skills/feature-driven-flow/SKILL.md`
-3. Rules/profiles: `skills/feature-driven-flow/extensions/{rules,profiles}/*.md`
-4. Packs: `skills/feature-driven-flow/packs/<pack_id>/...`
-5. Schemas: `schemas/*.json`
-6. Tools: `tools/*.ps1`
+1. `codex/`
+   Codex-specific prompts, skills, and distribution README/license sources.
+2. `claude-code/`
+   Claude marketplace sources, plugin wrapper assets, commands, and plugin README/license sources.
+3. `shared/fdf/`
+   Shared runtime assets reused by both agents: settings, schemas, manifests, rules, profiles, packs, references, templates, scripts.
+4. `tools/`
+   Build, deploy, validation, and manifest generation scripts.
+5. `docs/`
+   Architecture, specification, validation, and distribution documentation.
+6. `distrib/`
+   Generated release artifacts for `feature-driven-flow-codex` and `feature-driven-flow-claude`.
 
 ## Architecture Overview
 
-1. Core shared rules: `skills/feature-driven-flow/extensions/rules/*.md`
-2. Core shared profiles: `skills/feature-driven-flow/extensions/profiles/*.md`
-3. Optional packs: `skills/feature-driven-flow/packs/<pack_id>/...`
-4. Repo-local overlays in target repositories:
-`<repo>/.codex/feature-driven-flow/settings.json`  
-`<repo>/.codex/feature-driven-flow/rules/*.md`  
-`<repo>/.codex/feature-driven-flow/profiles/*.md`  
-`<repo>/.codex/feature-driven-flow/packs/*`
+1. Core shared rules: `shared/fdf/skills/feature-driven-flow/extensions/rules/*.md`
+2. Core shared profiles: `shared/fdf/skills/feature-driven-flow/extensions/profiles/*.md`
+3. Optional packs: `shared/fdf/skills/feature-driven-flow/packs/<pack_id>/...`
+4. Agent-specific wrappers:
+   - Codex entrypoints and behavior: `codex/`
+   - Claude Code entrypoints and behavior: `claude-code/`
+5. Repo-local overlays in target repositories:
+   - Codex:
+     `.codex/feature-driven-flow/settings.json`  
+     `.codex/feature-driven-flow/rules/*.md`  
+     `.codex/feature-driven-flow/profiles/*.md`  
+     `.codex/feature-driven-flow/packs/*`
+   - Claude Code:
+     `.claude/feature-driven-flow/settings.json`  
+     `.claude/feature-driven-flow/rules/*.md`  
+     `.claude/feature-driven-flow/profiles/*.md`  
+     `.claude/feature-driven-flow/packs/*`
 
 Rule precedence (high to low):
 
@@ -107,9 +165,9 @@ Profile model:
 Further reading:
 
 1. Specification: `docs/specification.md`
-2. Core references: `skills/feature-driven-flow/references/*.md`
+2. Core references: `shared/fdf/skills/feature-driven-flow/references/*.md`
 
-At Scope, Codex:
+At Scope, the conductor:
 
 1. Infers context (strictness, change type, delivery surface, sensitivity flags).
 2. If supplied by user, validates imported Effective Rule Matrix candidate (file or inline block).
@@ -119,7 +177,7 @@ At Scope, Codex:
 6. Exports confirmed matrix when auto-generation is enabled or user asks to save/export it.
 7. Can export compiled instructions as directory bundle or compact file with content mode `reference|portable|hybrid`.
 
-## Packs Included in This Distribution
+## Packs Included in FDF
 
 1. `async-collab`: persistence, async packets, portability exports.
 2. `quality`: engineering principles and test strategy policy.
@@ -131,13 +189,14 @@ Packs only affect asset availability. They do not change core invariants.
 
 ## Settings System
 
-Canonical format: JSON (`schemas/fdf-settings.schema.json`)
+Canonical format: JSON (`shared/fdf/schemas/fdf-settings.schema.json`)
 
 Settings files:
 
-1. Distribution defaults: `skills/feature-driven-flow/settings.json`
-2. Repo-local overrides: `.codex/feature-driven-flow/settings.json`
-3. Optional run snapshot: `<run_root_dir>/<run_id>/settings.snapshot.json`
+1. Shared defaults: `shared/fdf/skills/feature-driven-flow/settings.json`
+2. Codex repo-local overrides: `.codex/feature-driven-flow/settings.json`
+3. Claude Code repo-local overrides: `.claude/feature-driven-flow/settings.json`
+4. Optional run snapshot: `<run_root_dir>/<run_id>/settings.snapshot.json`
 
 Key settings groups:
 
@@ -147,28 +206,52 @@ Key settings groups:
 4. `local_rules`, `local_profiles`, `local_extensions`
 5. `overrides`, `matrix_import`, `matrix_export`, `effective_instructions`, `evidence`, `outputs`
 
-Default `packs.enabled` in this distribution:
+Default `packs.enabled` in this framework:
 `["async-collab","hardening","observability-lite","presets","quality"]`
 
 ## Install
 
-1. Verify Codex CLI:
+End users should install from the dedicated runtime repositories, not from this source repository.
+
+### Codex
+
+1. Use the packaged repo: [QuasarByte/feature-driven-flow-codex](https://github.com/QuasarByte/feature-driven-flow-codex)
+2. Verify Codex CLI:
 ```text
 codex --help
 ```
-2. Resolve `CODEX_HOME`:
+3. Resolve `CODEX_HOME`:
 `%USERPROFILE%\.codex` (Windows) or `~/.codex` (macOS/Linux)
-3. Copy assets:
-`skills/* -> $CODEX_HOME/skills/`  
+4. Copy assets:
+`skills/* -> $CODEX_HOME/skills/`
 `prompts/*.md -> $CODEX_HOME/prompts/`
-4. Restart Codex session.
+`fdf/ -> <project-root>/fdf/`
+5. Restart Codex session.
+
+### Claude Code
+
+1. Use the packaged repo: [QuasarByte/feature-driven-flow-claude](https://github.com/QuasarByte/feature-driven-flow-claude)
+2. Add the marketplace:
+```text
+/plugin marketplace add QuasarByte/feature-driven-flow-claude
+```
+3. Install the plugin:
+```text
+/plugin install feature-driven-flow@quasarbyte-plugins
+```
 
 ## Quick Start
 
-Run:
+Codex:
 
 ```text
 /prompts:fdf-start Create a simple console Java app that prints factorial(n). Use JDK 25 and Maven. Read n from argv.
+```
+
+Claude Code:
+
+```text
+/feature-driven-flow:fdf-start Create a simple console Java app that prints factorial(n). Use JDK 25 and Maven. Read n from argv.
 ```
 
 Optional explicit profile request:
@@ -199,7 +282,7 @@ Use this matrix (inline JSON block):
 ```json
 {
   "schema": "fdf/effective-rule-matrix.v1",
-  "fdf_version": "1.1.0",
+  "fdf_version": "1.2.0",
   "created_at": "2026-03-03T00:00:00Z",
   "selected_profiles": [],
   "profile_overrides": {},
@@ -270,19 +353,19 @@ Export portable instructions compact to .codex/feature-driven-flow/effective-ins
 Convert bundle -> compact:
 
 ```powershell
-pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath .codex/feature-driven-flow/effective-instructions-bundle -OutputPath .codex/feature-driven-flow/effective-instructions-compact.json
+pwsh -NoProfile -File fdf/scripts/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath .codex/feature-driven-flow/effective-instructions-bundle -OutputPath .codex/feature-driven-flow/effective-instructions-compact.json
 ```
 
 Convert bundle -> compact (portable embedded-content):
 
 ```powershell
-pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath .codex/feature-driven-flow/effective-instructions-bundle -OutputPath .codex/feature-driven-flow/effective-instructions-compact-portable.json -ContentMode portable
+pwsh -NoProfile -File fdf/scripts/convert-effective-instructions.ps1 -Mode directory-to-compact -InputPath .codex/feature-driven-flow/effective-instructions-bundle -OutputPath .codex/feature-driven-flow/effective-instructions-compact-portable.json -ContentMode portable
 ```
 
 Convert compact -> bundle:
 
 ```powershell
-pwsh -NoProfile -File tools/convert-effective-instructions.ps1 -Mode compact-to-directory -InputPath .codex/feature-driven-flow/effective-instructions-compact.json -OutputPath .codex/feature-driven-flow/effective-instructions-bundle
+pwsh -NoProfile -File fdf/scripts/convert-effective-instructions.ps1 -Mode compact-to-directory -InputPath .codex/feature-driven-flow/effective-instructions-compact.json -OutputPath .codex/feature-driven-flow/effective-instructions-bundle
 ```
 
 If user says only `save state` or `export compiled state`, Codex should ask whether you mean Effective Rule Matrix export, Effective Instructions export, or `state.json` export.
@@ -296,9 +379,9 @@ If user says only `save state` or `export compiled state`, Codex should ask whet
 5. By default, portable/hybrid embeds only provenance-listed files (`embed_only_referenced_sources=true`), so review for completeness.
 6. Artifacts can include `custom_instructions` with approval metadata for reusable user-defined prompts/phrases/rules.
 
-## Prompt Commands
+## User Commands
 
-Available utility prompts in this repository:
+Available Codex utility prompts in this repository:
 
 1. `/prompts:fdf-import-effective-matrix <path-or-inline-hint>`
 2. `/prompts:fdf-export-effective-matrix [output-path]`
@@ -369,9 +452,9 @@ Typical outputs:
 
 Generated manifests provide machine-readable asset discovery.
 
-1. Combined: `skills/feature-driven-flow/extensions/manifest.json`
-2. Core pack: `skills/feature-driven-flow/manifest.json`
-3. Per-pack: `skills/feature-driven-flow/packs/<pack_id>/manifest.json`
+1. Combined: `shared/fdf/skills/feature-driven-flow/extensions/manifest.json`
+2. Core pack: `shared/fdf/skills/feature-driven-flow/manifest.json`
+3. Per-pack: `shared/fdf/skills/feature-driven-flow/packs/<pack_id>/manifest.json`
 
 Regenerate:
 
@@ -411,20 +494,25 @@ Validation playbook:
 3. Content mode (`reference|portable|hybrid`): how Effective Instructions store sources (paths only vs embedded content).
 4. Custom instructions: optional user-defined prompts/phrases stored in Effective Instructions for reuse, with explicit approval.
 
-## Specialist Skills (Optional)
+## Internal Specialist Skills
 
-1. `skills/fdf-code-explorer`: behavior tracing and dependency map.
-2. `skills/fdf-implementation-planner`: implementation strategy and sequencing.
-3. `skills/fdf-change-auditor`: verification and risk-focused audit.
+1. `codex/skills/fdf-code-explorer`: behavior tracing and dependency map.
+2. `codex/skills/fdf-implementation-planner`: implementation strategy and sequencing.
+3. `codex/skills/fdf-change-auditor`: verification and risk-focused audit.
 
-These are accelerators; active phase rules remain authoritative.
+These are internal accelerators and implementation assets; prompts are the supported user-facing interface and active phase rules remain authoritative.
+
+Delegation guidance:
+
+1. Claude Code can reasonably run these specialist roles as subagents when the task is bounded and context-heavy.
+2. Codex should treat them as reusable instruction modules first and use child agents only for larger bounded tasks.
 
 ## Repository Map
 
 1. Specification: `docs/specification.md`
-2. Core references: `skills/feature-driven-flow/references/*.md`
-3. Templates: `skills/feature-driven-flow/templates/*.md`
-4. Schemas: `schemas/*.json`
+2. Core references: `shared/fdf/skills/feature-driven-flow/references/*.md`
+3. Templates: `shared/fdf/skills/feature-driven-flow/templates/*.md`
+4. Schemas: `shared/fdf/schemas/*.json`
 5. Tools: `tools/*.ps1`
 6. Validation playbook: `docs/validation-types-playbook.md`
 
@@ -439,11 +527,11 @@ run scripts with `pwsh` (PowerShell 7).
 4. Phase blocked:
 inspect active rule `checks`, then resolve missing inputs/decisions.
 5. Imported matrix rejected:
-ensure file/inline content matches `schemas/fdf-effective-matrix.schema.json` and uses valid rule ids/phases.
+ensure file/inline content matches `shared/fdf/schemas/fdf-effective-matrix.schema.json` and uses valid rule ids/phases.
 6. Matrix was not auto-saved:
 check `matrix_export.auto_generate_on_scope_confirmed` (default `false`) in settings.
 7. Compiled instructions import/export rejected:
-check `schemas/fdf-effective-instructions-bundle.schema.json`, `schemas/fdf-effective-instructions-compact.schema.json`, portable schema variants, and `effective_instructions.*` settings (`content_mode`, `accept_content_modes`).
+check `shared/fdf/schemas/fdf-effective-instructions-bundle.schema.json`, `shared/fdf/schemas/fdf-effective-instructions-compact.schema.json`, portable schema variants, and `effective_instructions.*` settings (`content_mode`, `accept_content_modes`).
 
 ## Creator
 

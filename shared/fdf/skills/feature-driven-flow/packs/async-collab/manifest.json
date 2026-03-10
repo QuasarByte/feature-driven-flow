@@ -1,0 +1,134 @@
+{
+  "schema": "fdf/pack-manifest.v1",
+  "generated_at": "2026-03-10T00:28:31",
+  "pack_id": "async-collab",
+  "pack_root": "shared/fdf/skills/feature-driven-flow/packs/async-collab",
+  "rules": [
+    {
+      "pack_id": "async-collab",
+      "id": "async-decision-packets",
+      "title": "Async Decision Packets (Team TUI Exports)",
+      "tags": [
+        "team",
+        "async",
+        "persistence",
+        "handoff"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "clarify",
+        "architect",
+        "verify"
+      ],
+      "intent": "Export user/team questions and decision points into versionable markdown \"packets\" that can be shared outside the chat (email/messenger/VCS) and answered asynchronously.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/rules/async-decision-packets.md"
+    },
+    {
+      "pack_id": "async-collab",
+      "id": "conversation-export",
+      "title": "Conversation Export (Optional Transcript Snapshot)",
+      "tags": [
+        "persistence",
+        "portability",
+        "context",
+        "team"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "clarify",
+        "architect",
+        "verify",
+        "summarize"
+      ],
+      "intent": "Optionally export chat context into a versionable markdown file to support long pauses and cross-tool continuation when phase logs alone are insufficient.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/rules/conversation-export.md"
+    },
+    {
+      "pack_id": "async-collab",
+      "id": "flow-observability",
+      "title": "Flow Observability (Logging, Tracing, Persistence)",
+      "tags": [
+        "observability",
+        "logging",
+        "tracing",
+        "persistence",
+        "team"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "explore",
+        "clarify",
+        "architect",
+        "implement",
+        "verify",
+        "summarize"
+      ],
+      "intent": "Persist the workflow state as versionable markdown files so teams can pause/resume asynchronously and debug the delivery process over time.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/rules/flow-observability.md"
+    },
+    {
+      "pack_id": "async-collab",
+      "id": "runbook-export",
+      "title": "Runbook Export (Cross-Agent Resume)",
+      "tags": [
+        "persistence",
+        "portability",
+        "team"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "summarize"
+      ],
+      "intent": "Create a human- and agent-readable `RUNBOOK.md` in the run directory so the run can be resumed on other machines and with other LLM/agent tools.",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/rules/runbook-export.md"
+    },
+    {
+      "pack_id": "async-collab",
+      "id": "state-export",
+      "title": "State Export (state.json)",
+      "tags": [
+        "persistence",
+        "portability",
+        "state"
+      ],
+      "applies_to_phases": [
+        "scope",
+        "clarify",
+        "architect",
+        "implement",
+        "verify",
+        "summarize"
+      ],
+      "intent": "Export a minimal machine-readable snapshot of the run state for cross-agent portability (tools that prefer structured inputs).",
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/rules/state-export.md"
+    }
+  ],
+  "profiles": [
+    {
+      "pack_id": "async-collab",
+      "id": "async-collab-overlay",
+      "title": "Async Collaboration Overlay",
+      "intent": "Enable persistence, async packets, and portability exports for team/offline workflows.",
+      "extends": [],
+      "always_rules": [
+        "flow-observability",
+        "async-decision-packets",
+        "runbook-export",
+        "state-export",
+        "conversation-export"
+      ],
+      "file": "shared/fdf/skills/feature-driven-flow/packs/async-collab/extensions/profiles/async-collab-overlay.md"
+    }
+  ],
+  "templates": [
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/conversation-export.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/packet-decision-tui.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/packet-questions-tui.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/run-index.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/runbook.md",
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/templates/state.json"
+  ],
+  "references": [
+    "shared/fdf/skills/feature-driven-flow/packs/async-collab/references/persistence.md"
+  ]
+}

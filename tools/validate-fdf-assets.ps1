@@ -176,21 +176,21 @@ function Validate-JsonFileAgainstSchema(
   }
 }
 
-$coreRuleDir = Join-Path $RepoRoot "skills/feature-driven-flow/extensions/rules"
-$coreProfileDir = Join-Path $RepoRoot "skills/feature-driven-flow/extensions/profiles"
-$globalSettingsJsonPath = Join-Path $RepoRoot "skills/feature-driven-flow/settings.json"
+$coreRuleDir = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/extensions/rules"
+$coreProfileDir = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/extensions/profiles"
+$globalSettingsJsonPath = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/settings.json"
 $repoSettingsJsonPath = Join-Path $RepoRoot ".codex/feature-driven-flow/settings.json"
-$settingsSchemaPath = Join-Path $RepoRoot "schemas/fdf-settings.schema.json"
-$effectiveMatrixSchemaPath = Join-Path $RepoRoot "schemas/fdf-effective-matrix.schema.json"
-$effectiveInstructionsBundleSchemaPath = Join-Path $RepoRoot "schemas/fdf-effective-instructions-bundle.schema.json"
-$effectiveInstructionsCompactSchemaPath = Join-Path $RepoRoot "schemas/fdf-effective-instructions-compact.schema.json"
-$effectiveInstructionsBundlePortableSchemaPath = Join-Path $RepoRoot "schemas/fdf-effective-instructions-bundle-portable.schema.json"
-$effectiveInstructionsCompactPortableSchemaPath = Join-Path $RepoRoot "schemas/fdf-effective-instructions-compact-portable.schema.json"
-$effectiveMatrixTemplatePath = Join-Path $RepoRoot "skills/feature-driven-flow/templates/effective-rule-matrix.json"
-$effectiveInstructionsBundleTemplatePath = Join-Path $RepoRoot "skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json"
-$effectiveInstructionsCompactTemplatePath = Join-Path $RepoRoot "skills/feature-driven-flow/templates/effective-instructions-compact.json"
-$effectiveInstructionsBundlePortableTemplatePath = Join-Path $RepoRoot "skills/feature-driven-flow/templates/effective-instructions-bundle-portable.manifest.json"
-$effectiveInstructionsCompactPortableTemplatePath = Join-Path $RepoRoot "skills/feature-driven-flow/templates/effective-instructions-compact-portable.json"
+$settingsSchemaPath = Join-Path $RepoRoot "shared/fdf/schemas/fdf-settings.schema.json"
+$effectiveMatrixSchemaPath = Join-Path $RepoRoot "shared/fdf/schemas/fdf-effective-matrix.schema.json"
+$effectiveInstructionsBundleSchemaPath = Join-Path $RepoRoot "shared/fdf/schemas/fdf-effective-instructions-bundle.schema.json"
+$effectiveInstructionsCompactSchemaPath = Join-Path $RepoRoot "shared/fdf/schemas/fdf-effective-instructions-compact.schema.json"
+$effectiveInstructionsBundlePortableSchemaPath = Join-Path $RepoRoot "shared/fdf/schemas/fdf-effective-instructions-bundle-portable.schema.json"
+$effectiveInstructionsCompactPortableSchemaPath = Join-Path $RepoRoot "shared/fdf/schemas/fdf-effective-instructions-compact-portable.schema.json"
+$effectiveMatrixTemplatePath = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/templates/effective-rule-matrix.json"
+$effectiveInstructionsBundleTemplatePath = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle.manifest.json"
+$effectiveInstructionsCompactTemplatePath = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-compact.json"
+$effectiveInstructionsBundlePortableTemplatePath = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-bundle-portable.manifest.json"
+$effectiveInstructionsCompactPortableTemplatePath = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/templates/effective-instructions-compact-portable.json"
 $repoEffectiveMatrixPath = Join-Path $RepoRoot ".codex/feature-driven-flow/effective-rule-matrix.json"
 $repoEffectiveInstructionsBundlePath = Join-Path $RepoRoot ".codex/feature-driven-flow/effective-instructions-bundle/bundle.manifest.json"
 $repoEffectiveInstructionsCompactPath = Join-Path $RepoRoot ".codex/feature-driven-flow/effective-instructions-compact.json"
@@ -231,7 +231,7 @@ $allowSharedPacks = Parse-BoolLike ($settings["packs.allow_shared_packs"]) $true
 $allowLocalPacks = Parse-BoolLike ($settings["packs.allow_local_packs"]) $true
 $enabledPackIds = Split-CommaList ($settings["packs.enabled"])
 
-$sharedPacksRel = if ($settings.ContainsKey("packs.shared_dir") -and -not [string]::IsNullOrWhiteSpace($settings["packs.shared_dir"])) { $settings["packs.shared_dir"] } else { "skills/feature-driven-flow/packs" }
+$sharedPacksRel = if ($settings.ContainsKey("packs.shared_dir") -and -not [string]::IsNullOrWhiteSpace($settings["packs.shared_dir"])) { $settings["packs.shared_dir"] } else { "shared/fdf/skills/feature-driven-flow/packs" }
 $localPacksRel = if ($settings.ContainsKey("packs.local_dir") -and -not [string]::IsNullOrWhiteSpace($settings["packs.local_dir"])) { $settings["packs.local_dir"] } else { ".codex/feature-driven-flow/packs" }
 
 $packsDir = Join-Path $RepoRoot $sharedPacksRel

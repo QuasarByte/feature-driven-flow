@@ -17,10 +17,10 @@ if (-not $RepoRoot) {
   $RepoRoot = (Resolve-Path (Join-Path $scriptDir "..")).Path
 }
 if (-not $OutFile) {
-  $OutFile = Join-Path $RepoRoot "skills/feature-driven-flow/extensions/manifest.json"
+  $OutFile = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/extensions/manifest.json"
 }
 if (-not $PacksDir) {
-  $PacksDir = Join-Path $RepoRoot "skills/feature-driven-flow/packs"
+  $PacksDir = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/packs"
 }
 
 function Get-HeadingBody([string] $content, [string] $field) {
@@ -142,7 +142,7 @@ function Get-PackAssets([string] $packId, [string] $packRoot) {
   }
 }
 
-$coreRoot = Join-Path $RepoRoot "skills/feature-driven-flow"
+$coreRoot = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow"
 $core = Get-PackAssets "core" $coreRoot
 
 $packs = @()
@@ -182,9 +182,9 @@ foreach ($p in $packs) {
 $perPack = @($core) + $packs
 foreach ($p in $perPack) {
   if ($p.pack_id -eq "core") {
-    $packOut = Join-Path $RepoRoot "skills/feature-driven-flow/manifest.json"
+    $packOut = Join-Path $RepoRoot "shared/fdf/skills/feature-driven-flow/manifest.json"
   } else {
-    $packOut = Join-Path $RepoRoot ("skills/feature-driven-flow/packs/" + $p.pack_id + "/manifest.json")
+    $packOut = Join-Path $RepoRoot ("shared/fdf/skills/feature-driven-flow/packs/" + $p.pack_id + "/manifest.json")
   }
   $packObj = [ordered]@{
     schema = "fdf/pack-manifest.v1"
