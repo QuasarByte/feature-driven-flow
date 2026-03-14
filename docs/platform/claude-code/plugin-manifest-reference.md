@@ -15,7 +15,7 @@ Location: `.claude-plugin/plugin.json` (optional — Claude Code auto-discovers 
 ```json
 {
   "name": "plugin-name",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Brief plugin description",
   "author": {
     "name": "Author Name",

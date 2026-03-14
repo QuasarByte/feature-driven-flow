@@ -1,6 +1,6 @@
 {
   "name": "feature-driven-flow",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Feature-Driven-Flow (FDF): a structured 7-phase AI delivery framework for non-trivial feature development. Provides scoped intent, repository exploration, ambiguity resolution, design options, controlled implementation, assurance, and end-state reporting.",
   "author": {
     "name": "QuasarByte",

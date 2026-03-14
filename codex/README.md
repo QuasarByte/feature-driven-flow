@@ -1,6 +1,6 @@
 # Feature-Driven-Flow (FDF)
 
-Version: `1.2.0`
+Version: `1.2.1`
 
 Feature-Driven-Flow is a markdown-first delivery framework for non-trivial work. This package targets Codex. It runs a fixed seven-phase workflow, compiles selected policies into an Effective Rule Matrix, and supports reusable effective-instructions artifacts.
 
@@ -46,6 +46,16 @@ Optional Effective Rule Matrix reuse:
 ```text
 /prompts:fdf-start Implement my feature using matrix file .codex/feature-driven-flow/effective-rule-matrix.json
 ```
+
+## Asset Resolution Rule
+
+At runtime, shared FDF assets must be resolved from `./fdf/` in the target project root.
+Do not resolve shared schemas or scripts from `$CODEX_HOME/skills/feature-driven-flow/`.
+
+- Shared schemas: `fdf/schemas/*.json`
+- Shared scripts: `fdf/scripts/*`
+- Shared references, templates, settings, packs: `fdf/skills/feature-driven-flow/*`
+- Repo-local overrides and generated artifacts only: `.codex/feature-driven-flow/*`
 
 ## Included Assets
 

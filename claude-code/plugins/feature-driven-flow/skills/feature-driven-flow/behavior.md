@@ -129,8 +129,10 @@ Use templates in:
 ## Tooling Expectations
 
 1. Prefer fast file search and targeted reads.
-2. Keep outputs concise but complete.
-3. Enforce phase checkpoints through explicit outputs and decisions.
+2. On PowerShell, wrap filesystem paths in single quotes when issuing shell commands, especially absolute paths that may contain spaces.
+3. If `rg` is unavailable, use PowerShell-native discovery commands such as `Get-ChildItem -Recurse -File` and `Select-String`.
+4. Keep outputs concise but complete.
+5. Enforce phase checkpoints through explicit outputs and decisions.
 
 ## Specialist Commands (Optional)
 

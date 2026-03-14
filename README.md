@@ -1,6 +1,6 @@
 # Feature-Driven-Flow (FDF)
 
-Version: `1.2.0`
+Version: `1.2.1`
 
 ![Feature-Driven-Flow Cover](assets/images/fdf-cover-001.png)
 
@@ -282,7 +282,7 @@ Use this matrix (inline JSON block):
 ```json
 {
   "schema": "fdf/effective-rule-matrix.v1",
-  "fdf_version": "1.2.0",
+  "fdf_version": "1.2.1",
   "created_at": "2026-03-03T00:00:00Z",
   "selected_profiles": [],
   "profile_overrides": {},

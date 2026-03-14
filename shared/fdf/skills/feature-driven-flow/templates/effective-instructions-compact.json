@@ -1,10 +1,10 @@
 {
   "schema": "fdf/effective-instructions-compact.v1",
-  "fdf_version": "1.2.0",
+  "fdf_version": "1.2.1",
   "created_at": "2026-03-04T00:00:00Z",
   "effective_matrix": {
     "schema": "fdf/effective-rule-matrix.v1",
-    "fdf_version": "1.2.0",
+    "fdf_version": "1.2.1",
     "created_at": "2026-03-04T00:00:00Z",
     "selected_profiles": [],
     "profile_overrides": {},

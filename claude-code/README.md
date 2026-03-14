@@ -1,6 +1,6 @@
 # Feature-Driven-Flow (FDF)
 
-Version: `1.2.0`
+Version: `1.2.1`
 
 This repository is a Claude Code marketplace that currently publishes one plugin:
 
@@ -41,10 +41,16 @@ plugins/feature-driven-flow/
 ```
 
 The marketplace catalog lives at repository root. The actual Claude plugin payload lives under `plugins/feature-driven-flow/`.
+
 ## Source Repository
 
 Development happens in [QuasarByte/feature-driven-flow](https://github.com/QuasarByte/feature-driven-flow).
 This repository is the Claude marketplace distribution published through [QuasarByte/feature-driven-flow-claude](https://github.com/QuasarByte/feature-driven-flow-claude).
+
+## PowerShell Path Handling
+
+When using PowerShell to inspect plugin files, quote filesystem paths that may contain spaces.
+If `rg` is unavailable in the shell, use PowerShell-native discovery commands such as `Get-ChildItem -Recurse -File` and `Select-String`.
 
 ## Maintainer Tooling
 

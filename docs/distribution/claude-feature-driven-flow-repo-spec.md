@@ -73,7 +73,7 @@ Bare `/fdf-*` command forms may not be reliable as the public interface for a ma
 
 ```powershell
 pwsh -NoProfile -File tools/build-distribution-claude.ps1
-pwsh -NoProfile -File tools/build-distribution-claude.ps1 -Version 1.2.0
+pwsh -NoProfile -File tools/build-distribution-claude.ps1 -Version 1.2.1
 pwsh -NoProfile -File tools/build-distribution-claude.ps1 -Force
 pwsh -NoProfile -File tools/deploy-distribution-claude.ps1 -TargetRepoPath C:\path\to\feature-driven-flow-claude -Build
 ```

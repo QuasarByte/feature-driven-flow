@@ -17,6 +17,16 @@ Read `fdf/skills/feature-driven-flow/references/phases.md` for phase intent and 
 Read `fdf/skills/feature-driven-flow/references/checklists.md` before finalizing.
 Read `fdf/skills/feature-driven-flow/references/extension-system.md`, `fdf/skills/feature-driven-flow/references/rule-model.md`, `fdf/skills/feature-driven-flow/references/profile-model.md`, `fdf/skills/feature-driven-flow/references/context-model.md`, `fdf/skills/feature-driven-flow/references/settings.md`, `fdf/skills/feature-driven-flow/references/packs.md`, `fdf/skills/feature-driven-flow/references/effective-matrix-reuse.md`, `fdf/skills/feature-driven-flow/references/effective-instructions-reuse.md`, and `fdf/skills/feature-driven-flow/references/specialist-skills.md` before applying rules.
 
+## Runtime Asset Root
+
+1. Shared FDF runtime assets live under `fdf/` at the target project root.
+2. Do not resolve shared assets from `$CODEX_HOME/skills/feature-driven-flow/` or from the skill directory itself.
+3. Resolve these paths from project-root `fdf/`:
+   - schemas: `fdf/schemas/*.json`
+   - scripts: `fdf/scripts/*`
+   - shared references/templates/packs/settings: `fdf/skills/feature-driven-flow/*`
+4. `.codex/feature-driven-flow/` is only for repository-local overrides and generated artifacts. It is not the source of shared schemas or scripts.
+
 ## Core Skeleton Invariants
 
 1. Do not change phase order.
@@ -129,8 +139,10 @@ Use templates in:
 ## Tooling Expectations
 
 1. Prefer fast file search and targeted reads.
-2. Keep outputs concise but complete.
-3. Enforce phase checkpoints through explicit outputs and decisions.
+2. On PowerShell, wrap filesystem paths in single quotes when issuing shell commands, especially absolute paths that may contain spaces.
+3. If `rg` is unavailable, use PowerShell-native discovery commands such as `Get-ChildItem -Recurse -File` and `Select-String`.
+4. Keep outputs concise but complete.
+5. Enforce phase checkpoints through explicit outputs and decisions.
 
 ## Specialist Skills (Optional)
 

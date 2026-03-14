@@ -4,6 +4,12 @@ Task:
 $ARGUMENTS
 
 Requirements:
+Runtime asset resolution:
+- Shared FDF assets live under `fdf/` at the target project root.
+- Do not look for shared schemas or scripts under `$CODEX_HOME/skills/feature-driven-flow/`.
+- Use `fdf/schemas/*.json`, `fdf/scripts/*`, and `fdf/skills/feature-driven-flow/*` for shared assets.
+- Use `.codex/feature-driven-flow/` only for repo-local overrides and generated artifacts.
+
 1. Execute all 7 phases in fixed order; do not skip or reorder phases, and honor phase gates/hard stops before advancing.
 2. Keep core skeleton invariants intact (clarify gate, approval gate, verify-before-summary).
 3. Infer execution context from request text, repository signals, and `AGENTS.md`.

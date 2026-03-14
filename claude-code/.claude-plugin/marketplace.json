@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Claude Code plugins published by QuasarByte",
-    "version": "1.2.0"
+    "version": "1.2.1"
   },
   "plugins": [
     {
       "name": "feature-driven-flow",
       "source": "./plugins/feature-driven-flow",
       "description": "Feature-Driven-Flow (FDF): a structured 7-phase AI delivery framework for non-trivial feature development. Provides scoped intent, repository exploration, ambiguity resolution, design options, controlled implementation, assurance, and end-state reporting.",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "author": {
         "name": "QuasarByte"
       },
