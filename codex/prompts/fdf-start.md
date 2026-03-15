@@ -5,9 +5,11 @@ $ARGUMENTS
 
 Requirements:
 Runtime asset resolution:
-- Shared FDF assets live under `fdf/` at the target project root.
-- Do not look for shared schemas or scripts under `$CODEX_HOME/skills/feature-driven-flow/`.
-- Use `fdf/schemas/*.json`, `fdf/scripts/*`, and `fdf/skills/feature-driven-flow/*` for shared assets.
+- Resolve shared FDF assets from the first available root in this order:
+  - project-local `./fdf/` at the target project root
+  - global Codex home `fdf/` directory (for example `%USERPROFILE%\.codex\fdf` on Windows or `~/.codex/fdf` on macOS/Linux)
+- Never look for shared schemas or scripts under the installed Codex skill directory for `feature-driven-flow`.
+- Use `fdf/schemas/*.json`, `fdf/scripts/*`, and `fdf/skills/feature-driven-flow/*` from the selected runtime root.
 - Use `.codex/feature-driven-flow/` only for repo-local overrides and generated artifacts.
 
 1. Execute all 7 phases in fixed order; do not skip or reorder phases, and honor phase gates/hard stops before advancing.

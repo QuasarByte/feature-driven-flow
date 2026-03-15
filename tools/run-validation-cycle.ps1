@@ -90,6 +90,41 @@ function Convert-ManifestsToLF {
   }
 }
 
+function Find-PatternInPaths {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string] $Pattern,
+
+    [Parameter(Mandatory = $true)]
+    [string[]] $Paths,
+
+    [switch] $CaseSensitive,
+    [switch] $IncludeLineNumber,
+    [switch] $SimpleMatch
+  )
+
+  $searchRoots = @()
+  foreach ($path in $Paths) {
+    if (-not (Test-Path $path)) { continue }
+    $item = Get-Item $path
+    if ($item.PSIsContainer) {
+      $searchRoots += Get-ChildItem -Path $item.FullName -Recurse -File
+    } else {
+      $searchRoots += $item
+    }
+  }
+
+  $selectArgs = @{
+    Pattern = $Pattern
+  }
+  if ($CaseSensitive) { $selectArgs.CaseSensitive = $true }
+  if ($IncludeLineNumber) { $selectArgs = $selectArgs }
+  if ($SimpleMatch) { $selectArgs.SimpleMatch = $true }
+
+  if ($searchRoots.Count -eq 0) { return @() }
+  return @($searchRoots | Select-String @selectArgs)
+}
+
 try {
   # A1
   try {
@@ -268,8 +303,8 @@ try {
 
   # C2
   try {
-    $hits = rg -n "\.codex/feature-driven-flow/settings\.md|skills/feature-driven-flow/settings\.md|settings\.snapshot\.md|templates/settings\.md" README.md codex claude-code tools docs/specification.md | Out-String
-    $ok = [string]::IsNullOrWhiteSpace($hits)
+    $hits = Find-PatternInPaths -Pattern '\.codex/feature-driven-flow/settings\.md|skills/feature-driven-flow/settings\.md|settings\.snapshot\.md|templates/settings\.md' -Paths @('README.md', 'codex', 'claude-code', 'tools', 'docs/specification.md')
+    $ok = (@($hits).Count -eq 0)
     Add-Result -Check "C2_SETTINGS_PATH_POLICY" -Status ($(if ($ok) { "PASS" } else { "FAIL" })) -Evidence ($(if ($ok) { "no matches" } else { "found deprecated settings markdown path" }))
   } catch {
     Add-Result -Check "C2_SETTINGS_PATH_POLICY" -Status "FAIL" -Evidence $_.Exception.Message
@@ -369,8 +404,8 @@ try {
 
   # G2
   try {
-    $hits = rg -n "/prompts:(?!fdf-)[a-z]" -P README.md docs codex claude-code | Out-String
-    $ok = [string]::IsNullOrWhiteSpace($hits)
+    $hits = Find-PatternInPaths -Pattern '/prompts:' -Paths @('README.md', 'docs', 'codex', 'claude-code') | Where-Object { $_.Line -match '/prompts:(?!fdf-)[a-z]' }
+    $ok = (@($hits).Count -eq 0)
     Add-Result -Check "G2_PROMPT_COMMAND_PREFIX" -Status ($(if ($ok) { "PASS" } else { "FAIL" })) -Evidence ($(if ($ok) { "all prefixed" } else { "found non-prefixed refs" }))
   } catch {
     Add-Result -Check "G2_PROMPT_COMMAND_PREFIX" -Status "FAIL" -Evidence $_.Exception.Message

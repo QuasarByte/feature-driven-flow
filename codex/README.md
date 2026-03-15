@@ -8,23 +8,25 @@ Feature-Driven-Flow is a markdown-first delivery framework for non-trivial work.
 
 1. Copy `skills/*` into `$CODEX_HOME/skills/`.
 2. Copy `prompts/*.md` into `$CODEX_HOME/prompts/`.
-3. Copy `fdf/` into your target project root as `./fdf/`.
-4. Restart Codex.
+3. Copy `fdf/` into `$CODEX_HOME/fdf/` to make shared FDF assets available globally.
+4. Optionally copy `fdf/` into a target project root as `./fdf/` when that project needs local FDF overrides.
+5. Restart Codex.
 
-Resulting runtime layout in a target project:
+Resulting runtime layout:
 
 ```text
 $CODEX_HOME/
 ├── skills/
 │   └── feature-driven-flow/
-└── prompts/
-    └── fdf-start.md
-
-<project-root>/
+├── prompts/
+│   └── fdf-start.md
 └── fdf/
     ├── schemas/
     ├── scripts/
     └── skills/feature-driven-flow/
+
+<project-root>/
+└── fdf/                              # optional project-local override
 ```
 
 ## Quick Start
@@ -49,7 +51,11 @@ Optional Effective Rule Matrix reuse:
 
 ## Asset Resolution Rule
 
-At runtime, shared FDF assets must be resolved from `./fdf/` in the target project root.
+At runtime, shared FDF assets are resolved from the first available root in this order:
+
+1. `./fdf/` in the target project root
+2. `$CODEX_HOME/fdf/`
+
 Do not resolve shared schemas or scripts from `$CODEX_HOME/skills/feature-driven-flow/`.
 
 - Shared schemas: `fdf/schemas/*.json`
@@ -66,7 +72,6 @@ Do not resolve shared schemas or scripts from `$CODEX_HOME/skills/feature-driven
 - Shared rules, profiles, packs, templates, references: `fdf/skills/feature-driven-flow/`
 - Schemas: `fdf/schemas/*.json`
 - Conversion tool: `fdf/scripts/convert-effective-instructions.ps1`
-
 
 ## Source Repository
 
@@ -113,7 +118,7 @@ Repo-local overrides can be added at:
 - `.codex/feature-driven-flow/profiles/*.md`
 - `.codex/feature-driven-flow/packs/*`
 
-Default shared pack directory inside the installed runtime:
+Default shared pack directory inside the selected runtime root:
 
 `fdf/skills/feature-driven-flow/packs`
 
@@ -161,9 +166,10 @@ pwsh -NoProfile -File fdf/scripts/convert-effective-instructions.ps1 -Mode compa
 ## Troubleshooting
 
 1. Prompt missing: verify `fdf-start.md` exists in `$CODEX_HOME/prompts/` and restart Codex.
-2. Packs not available: check `packs.enabled` and `fdf/skills/feature-driven-flow/packs/<pack_id>/manifest.json`.
-3. Imported matrix rejected: validate against `fdf/schemas/fdf-effective-matrix.schema.json`.
-4. Effective-instructions import/export rejected: validate against the relevant schema under `fdf/schemas/` and review `effective_instructions.*` settings.
+2. Shared assets missing: verify `fdf/` exists in either `./fdf/` or `$CODEX_HOME/fdf/`.
+3. Packs not available: check `packs.enabled` and `fdf/skills/feature-driven-flow/packs/<pack_id>/manifest.json`.
+4. Imported matrix rejected: validate against `fdf/schemas/fdf-effective-matrix.schema.json`.
+5. Effective-instructions import/export rejected: validate against the relevant schema under `fdf/schemas/` and review `effective_instructions.*` settings.
 
 ## Deploy Sync
 

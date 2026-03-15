@@ -8,7 +8,7 @@ This document defines how users can reuse a precomputed Effective Rule Matrix at
 2. The run still requires validation + explicit user confirmation in Scope.
 3. Core invariants and `AGENTS.md` constraints still take precedence.
 4. Export/save behavior is controlled by `matrix_export.*` settings; auto-generation is optional and disabled by default.
-5. Compiled/effective instructions reuse is covered separately in `references/effective-instructions-reuse.md`.
+5. Compiled/effective instructions reuse is covered separately in `effective-instructions-reuse.md`.
 
 ## Supported Input Modes
 
@@ -20,7 +20,7 @@ User supplies a path to a JSON artifact (recommended):
 
 Artifact must conform to:
 
-`schemas/fdf-effective-matrix.schema.json`
+`../../../schemas/fdf-effective-matrix.schema.json`
 
 ### 2) Inline Multiline Block Input
 

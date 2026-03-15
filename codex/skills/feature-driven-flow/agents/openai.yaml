@@ -1,6 +1,6 @@
 version: 1
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true
 interface:
   display_name: Feature-Driven-Flow Conductor
   short_description: Coordinate a 7-phase workflow with explicit decisions and phase-by-phase rule selection.

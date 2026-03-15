@@ -48,6 +48,6 @@ Use local profiles to encode repo-specific policy bundles without editing shared
 5. Compiled-instructions content mode can be `reference|portable|hybrid`; portable/hybrid improves transferability but increases size and may expose embedded source content.
 6. One extension dimension is used at runtime: rules.
 7. Rules are applied by phase based on each rule's `applies_to_phases`.
-8. Packs (asset bundles) can add additional rules/profiles/templates/references. Packs are located under `skills/feature-driven-flow/packs` in this distribution and can also be loaded from `.codex/feature-driven-flow/packs` in a target repo (see `references/packs.md`).
-9. Persistence and async team handoff are implemented by the `async-collab` pack (see `packs/async-collab/references/persistence.md`).
-10. A generated index of all assets is available at `extensions/manifest.json` (see `references/asset-index.md`).
+8. Packs (asset bundles) can add additional rules/profiles/templates/references. Packs are located under `skills/feature-driven-flow/packs` in this distribution and can also be loaded from `.codex/feature-driven-flow/packs` in a target repo (see `../references/packs.md`).
+9. Persistence and async team handoff are implemented by the `async-collab` pack (see `../packs/async-collab/references/persistence.md`).
+10. A generated index of all assets is available at `manifest.json` (see `../references/asset-index.md`).

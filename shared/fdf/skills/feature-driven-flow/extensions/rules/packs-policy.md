@@ -17,7 +17,7 @@ Make enabled pack selection explicit so asset discovery is deterministic and por
 
 ## guidance
 ### scope
-1. Read pack settings (see `references/settings.md` and `references/packs.md`):
+1. Read pack settings (see `../../references/settings.md` and `../../references/packs.md`):
    - `packs.enabled`
    - `packs.allow_shared_packs` / `packs.allow_local_packs`
    - `packs.shared_dir` / `packs.local_dir`

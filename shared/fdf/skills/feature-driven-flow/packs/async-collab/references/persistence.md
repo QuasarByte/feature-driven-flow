@@ -2,7 +2,7 @@
 
 Goal: make Feature-Driven-Flow usable asynchronously (team, email/messenger, days/weeks pauses) by persisting phase outputs and decisions as versionable markdown files.
 
-This is implemented as rule-driven behavior (see `extensions/rules/flow-observability.md` and `extensions/rules/async-decision-packets.md`).
+This is implemented as rule-driven behavior (see `../extensions/rules/flow-observability.md` and `../extensions/rules/async-decision-packets.md`).
 
 ## Run Directory
 
@@ -41,7 +41,7 @@ Shared cross-phase logs:
 2. `risk-register.md`
 3. `open-questions.md`
 4. `traceability.md`
-5. `execution-metrics.md` (optional; can reuse `templates/execution-metrics.md`)
+5. `execution-metrics.md` (optional; can reuse `../../../templates/execution-metrics.md`)
 
 Portability exports (optional; controlled by settings):
 
@@ -72,5 +72,5 @@ Example filenames:
    - decisions already made
    - open questions and owners
    - risks and mitigations
-3. If new facts require changing the rule matrix after Scope, use `templates/rule-matrix-diff.md` and record explicit approval.
+3. If new facts require changing the rule matrix after Scope, use `../../../templates/rule-matrix-diff.md` and record explicit approval.
 

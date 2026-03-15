@@ -11,7 +11,7 @@ This document explains the purpose of each phase in plain language (for users) a
 Purpose:
 
 1. Establish the intended outcome, scope boundaries, and measurable success criteria.
-2. Infer and record structured context fields (see `references/context-model.md`).
+2. Infer and record structured context fields (see `context-model.md`).
 3. If provided by the user, validate imported Effective Rule Matrix candidate (file path or inline block).
 4. If provided by the user, validate imported Effective Instructions candidate (directory bundle or compact file) and content mode (`reference|portable|hybrid`).
 5. Select governing profiles/rules and compile matrix when no valid import is provided.

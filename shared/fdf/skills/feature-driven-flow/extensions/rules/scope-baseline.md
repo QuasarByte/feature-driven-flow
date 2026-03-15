@@ -19,16 +19,16 @@ Establish shared understanding and lock the Effective Rule Matrix (phase-by-phas
 ### scope
 1. Restate desired outcome, scope boundaries, and success criteria.
 2. Infer execution context using request text, repository signals, and `AGENTS.md`.
-   Record structured context fields using `references/context-model.md`.
+   Record structured context fields using `../../references/context-model.md`.
 3. Detect whether user supplied an Effective Rule Matrix candidate (file path or inline block), including phrases like load/import/use/read/reuse matrix.
-   Parse and normalize candidate input using `references/effective-matrix-reuse.md`.
+   Parse and normalize candidate input using `../../references/effective-matrix-reuse.md`.
 4. Validate candidate (when provided):
    - all phases present
    - rule IDs exist
    - rule applicability matches phase
    - no conflict with core invariants or `AGENTS.md`
 5. Detect whether user supplied compiled/effective instructions candidate (directory bundle or compact file; reference or portable content mode).
-   Parse and validate candidate input using `references/effective-instructions-reuse.md`.
+   Parse and validate candidate input using `../../references/effective-instructions-reuse.md`.
 6. If compiled/effective instructions candidate is provided, ask user to accept imported instructions, refresh from current assets, or discard candidate.
 7. If matrix candidate is missing or fails validation, propose profile selection (base + optional overlays) with one recommended baseline set and compile a matrix.
 8. Present the resulting candidate matrix as the Effective Rule Matrix.

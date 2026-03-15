@@ -225,7 +225,8 @@ codex --help
 4. Copy assets:
 `skills/* -> $CODEX_HOME/skills/`
 `prompts/*.md -> $CODEX_HOME/prompts/`
-`fdf/ -> <project-root>/fdf/`
+`fdf/ -> $CODEX_HOME/fdf/`
+Optional per-project override: `fdf/ -> <project-root>/fdf/`
 5. Restart Codex session.
 
 ### Claude Code
@@ -509,12 +510,27 @@ Delegation guidance:
 
 ## Repository Map
 
-1. Specification: `docs/specification.md`
-2. Core references: `shared/fdf/skills/feature-driven-flow/references/*.md`
-3. Templates: `shared/fdf/skills/feature-driven-flow/templates/*.md`
-4. Schemas: `shared/fdf/schemas/*.json`
-5. Tools: `tools/*.ps1`
-6. Validation playbook: `docs/validation-types-playbook.md`
+1. Architecture entrypoint: `ARCHITECTURE.md`
+2. Specification: `docs/specification.md`
+3. Knowledge index: `docs/INDEX.md`
+4. Core references: `shared/fdf/skills/feature-driven-flow/references/*.md`
+5. Templates: `shared/fdf/skills/feature-driven-flow/templates/*.md`
+6. Schemas: `shared/fdf/schemas/*.json`
+7. Tools: `tools/*.ps1`
+8. Validation playbook: `docs/validation-types-playbook.md`
+9. Exec plan convention: `docs/exec-plans/README.md`
+
+## Documentation Governance
+
+This repository uses `docs/` as its maintained knowledge base.
+
+Rules:
+
+1. Use `docs/INDEX.md` as the routing entrypoint.
+2. Keep one canonical file per topic instead of creating overlapping note trees.
+3. Split broad documents, merge duplicates, and remove stale guidance promptly.
+4. Keep `AGENTS.md` as the canonical cross-agent maintainer contract.
+5. Use `CLAUDE.md` only as a thin adapter when Claude-specific discoverability is useful.
 
 ## Troubleshooting
 

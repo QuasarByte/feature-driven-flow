@@ -18,9 +18,9 @@ Make configuration explicit and versionable, and reduce hardcoded behavior in ru
 ## guidance
 ### scope
 1. Load settings, if present:
-   - `skills/feature-driven-flow/settings.json` (global defaults)
+   - `../../settings.json` (global defaults)
    - `.codex/feature-driven-flow/settings.json`
-2. If repo-local settings are missing, use global defaults and defaults from `references/settings.md`, and propose creating the repo-local settings file using `../../templates/settings.json`.
+2. If repo-local settings are missing, use global defaults and defaults from `../../references/settings.md`, and propose creating the repo-local settings file using `../../templates/settings.json`.
 3. Record the effective settings for this run:
    - in Scope outputs
    - in `00-run.md` (if persistence is enabled)

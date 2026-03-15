@@ -4,7 +4,7 @@ This repository is a markdown asset pack (rules, profiles, templates, references
 
 To reduce discovery cost and "compile" what exists without scanning many files, use the generated manifest:
 
-`skills/feature-driven-flow/extensions/manifest.json`
+`../extensions/manifest.json`
 
 ## What The Manifest Contains
 
@@ -25,7 +25,7 @@ powershell -ExecutionPolicy Bypass -File tools/generate-fdf-manifest.ps1
 
 This updates:
 
-`skills/feature-driven-flow/extensions/manifest.json`
+`../extensions/manifest.json`
 
 ## When To Use It
 
@@ -37,6 +37,6 @@ This updates:
 
 If packs are used, manifests can exist for each pack as well:
 
-`skills/feature-driven-flow/packs/<pack_id>/manifest.json`
+`../packs/<pack_id>/manifest.json`
 
-See `references/packs.md`.
+See `packs.md`.

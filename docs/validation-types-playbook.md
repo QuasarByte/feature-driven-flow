@@ -8,6 +8,7 @@ Scope: reusable validation catalog for `feature-driven-flow`.
 Use this document when changing shared assets, manifests, packaging scripts, settings, schemas, or entrypoints.
 
 This is an operator and maintainer document. It is not the behavioral specification. For runtime semantics and artifact contracts, use `docs/specification.md`.
+For multi-turn spawned-agent end-to-end checks, use `docs/testing/README.md` and the harness entry points `tools/run-codex-dialog-e2e.ps1` and `tools/run-claude-dialog-e2e.ps1`.
 
 ## 2) Fast Path
 
@@ -28,6 +29,15 @@ Use the detailed checks below only when:
 1. the full runner fails
 2. you are debugging one validation family
 3. you are changing validation scripts themselves
+
+Dialog E2E runs are complementary, not a replacement for this validation cycle.
+
+Use dialog E2E when you need proof that:
+
+1. the installed prompt is invokable
+2. the installed skill is actually used
+3. resumed session dialog works
+4. FDF runtime exports are produced in a real agent session
 
 ## 3) Recommended Execution Order
 

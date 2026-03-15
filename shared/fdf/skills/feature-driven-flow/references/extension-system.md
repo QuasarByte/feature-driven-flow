@@ -18,7 +18,7 @@ Use markdown rules to customize behavior without scripts.
 
 Apply layers in this order:
 
-1. Core skeleton (`SKILL.md`, `references/*`, `templates/*`).
+1. Core skeleton (`SKILL.md`, `../references/*`, `../templates/*`).
 2. Repository policy constraints in `AGENTS.md`.
 3. Settings and pack selection (`settings.json`, repo-local settings, enabled packs).
 4. Profile selection + explicit overrides (inputs; optional).
@@ -93,11 +93,11 @@ Profiles are reusable policy bundles that select rules. They do not change runti
 3. Profiles should be recorded as provenance alongside the matrix:
    - `selected_profiles`
    - `profile_overrides` (if any)
-4. Shared profiles can be discovered from `extensions/profiles/*.md`.
+4. Shared profiles can be discovered from `../extensions/profiles/*.md`.
 5. Repository-local profiles (optional) can be loaded from `.codex/feature-driven-flow/profiles/*.md`.
 
-See `references/profile-model.md` for the profile schema and merge rules.
-See `references/effective-instructions-reuse.md` for compiled-instructions bundle/compact behavior.
+See `profile-model.md` for the profile schema and merge rules.
+See `effective-instructions-reuse.md` for compiled-instructions bundle/compact behavior.
 
 ## Allowed Rule Scope
 

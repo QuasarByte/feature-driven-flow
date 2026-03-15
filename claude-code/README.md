@@ -20,6 +20,11 @@ Install the plugin:
 /plugin install feature-driven-flow@quasarbyte-plugins
 ```
 
+Optional shared runtime defaults:
+
+1. Copy `plugins/feature-driven-flow/fdf/` into `~/.claude/fdf/` if you want one global FDF asset tree outside the installed plugin cache.
+2. Optionally copy `fdf/` into a target project root as `./fdf/` when that project needs local FDF overrides.
+
 ## Included Plugin
 
 `feature-driven-flow` provides a structured 7-phase workflow for non-trivial software delivery.
@@ -30,8 +35,17 @@ After installation, use:
 /feature-driven-flow:fdf-start <task>
 ```
 
-
 Claude marketplace commands are documented in namespaced form: `/feature-driven-flow:fdf-*`.
+
+## Asset Resolution Rule
+
+At runtime, shared FDF assets are resolved from the first available root in this order:
+
+1. `./fdf/` in the target project root
+2. `~/.claude/fdf/`
+3. bundled plugin `fdf/`
+
+Repo-local overrides still live under `.claude/feature-driven-flow/`.
 
 ## Repository Layout
 

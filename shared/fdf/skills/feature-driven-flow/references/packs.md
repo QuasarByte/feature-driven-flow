@@ -44,7 +44,7 @@ Each pack has its own manifest:
 
 The core distribution also has a combined manifest:
 
-`skills/feature-driven-flow/extensions/manifest.json`
+`../extensions/manifest.json`
 
 Use `tools/generate-fdf-manifest.ps1` to regenerate manifests.
 

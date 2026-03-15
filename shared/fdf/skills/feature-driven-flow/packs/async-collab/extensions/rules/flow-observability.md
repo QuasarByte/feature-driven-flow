@@ -17,7 +17,7 @@ Persist the workflow state as versionable markdown files so teams can pause/resu
 
 ## guidance
 ### scope
-1. Create a run directory using `references/persistence.md`:
+1. Create a run directory using `../../references/persistence.md`:
    - `<run_root_dir>/<run_id>/`
 2. Create baseline run files using templates:
    - `00-run.md` (use `../../templates/run-index.md`)

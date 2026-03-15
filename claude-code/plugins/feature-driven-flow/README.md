@@ -10,6 +10,20 @@ If you added the QuasarByte marketplace, install the plugin with:
 /plugin install feature-driven-flow@quasarbyte-plugins
 ```
 
+Optional shared runtime defaults:
+
+1. Copy the bundled `fdf/` tree into `~/.claude/fdf/` if you want one reusable global FDF asset tree.
+2. Optionally copy `fdf/` into a target project root as `./fdf/` when that project needs local FDF overrides.
+
+## Runtime Asset Resolution
+
+The plugin resolves shared FDF assets from the first available root in this order:
+
+1. `./fdf/` in the target project root
+2. `~/.claude/fdf/`
+3. bundled plugin `fdf/`
+
+Project-local Claude overrides still live under `.claude/feature-driven-flow/`.
 ## Phases
 
 | # | Phase | Purpose |

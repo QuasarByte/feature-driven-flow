@@ -17,6 +17,19 @@ Read `fdf/skills/feature-driven-flow/references/phases.md` for phase intent and 
 Read `fdf/skills/feature-driven-flow/references/checklists.md` before finalizing.
 Read `fdf/skills/feature-driven-flow/references/extension-system.md`, `fdf/skills/feature-driven-flow/references/rule-model.md`, `fdf/skills/feature-driven-flow/references/profile-model.md`, `fdf/skills/feature-driven-flow/references/context-model.md`, `fdf/skills/feature-driven-flow/references/settings.md`, `fdf/skills/feature-driven-flow/references/packs.md`, `fdf/skills/feature-driven-flow/references/effective-matrix-reuse.md`, `fdf/skills/feature-driven-flow/references/effective-instructions-reuse.md`, and `fdf/skills/feature-driven-flow/references/specialist-skills.md` before applying rules.
 
+## Runtime Asset Roots
+
+1. Resolve shared FDF runtime assets from the first available root in this order:
+   - project-local override: `./fdf/` at the target project root
+   - global Claude home default: Claude home `fdf/` directory (for example `%USERPROFILE%\.claude\fdf` on Windows or `~/.claude/fdf` on macOS/Linux)
+   - bundled plugin default: plugin-root `fdf/`
+2. Resolve these shared paths from the selected runtime root:
+   - schemas: `fdf/schemas/*.json`
+   - scripts: `fdf/scripts/*`
+   - shared references/templates/packs/settings: `fdf/skills/feature-driven-flow/*`
+3. `.claude/feature-driven-flow/` is only for repository-local overrides and generated artifacts. It is not the source of shared schemas or scripts.
+
+
 ## Core Skeleton Invariants
 
 1. Do not change phase order.

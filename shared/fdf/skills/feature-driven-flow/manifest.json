@@ -1,6 +1,6 @@
 {
   "schema": "fdf/pack-manifest.v1",
-  "generated_at": "2026-03-10T00:28:31",
+  "generated_at": "2026-03-15T21:51:15",
   "pack_id": "core",
   "pack_root": "shared/fdf/skills/feature-driven-flow",
   "rules": [
