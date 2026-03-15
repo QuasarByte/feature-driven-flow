@@ -28,7 +28,7 @@ Keep these types distinct. Do not bury procedural instructions inside domain ref
    Validation families, failure triage, and release-gate expectations.
 4. Dialog E2E Testing
    [README.md](./testing/README.md)
-   Spawned-agent test methods, transcripts, artifact contracts, and scenario design.
+   Spawned-agent test methods, transcripts, artifact contracts, scenario design, and agent-native testing rationale.
 5. Exec Plans
    [README.md](./exec-plans/README.md)
    Convention and template for long-running implementation plans.

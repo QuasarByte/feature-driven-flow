@@ -12,9 +12,11 @@ The primary scope is Codex and Claude Code dialog testing. This repository now i
    Read this for the corresponding Claude Code method, plugin-loading model, and session-resume mechanics.
 3. `transcript-and-artifact-reference.md`
    Read this when you need the exact evidence model: transcripts, thread ids, exported FDF artifacts, and pass/fail assertions.
-4. `scenario-authoring-guide.md`
+4. `agent-native-testing-framework.md`
+   Read this when you want the higher-level case for agent-native testing and the proposed test taxonomy beyond the current harness scripts.
+5. `scenario-authoring-guide.md`
    Read this when you need to create new scenarios, stabilization rules, or article-grade examples.
-5. `codex-to-codex-dialog-patterns.md`
+6. `codex-to-codex-dialog-patterns.md`
    Read this when designing scenarios where one agent asks questions and the harness answers like a human operator.
 
 ## What This Set Covers
@@ -25,6 +27,7 @@ The primary scope is Codex and Claude Code dialog testing. This repository now i
 4. How to capture transcripts and exported FDF context.
 5. How to assert outcomes without hiding model behavior.
 6. How to keep scenarios portable across shells, machines, and installed tool differences.
+7. Why a broader agent-native testing framework makes sense for this repository category.
 
 ## What This Set Does Not Cover
 
